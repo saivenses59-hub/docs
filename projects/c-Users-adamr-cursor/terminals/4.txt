@@ -1,115 +1,8 @@
 ---
-pid: 9044
+pid: 35768
 cwd: |
   C:\Users\adamr\.cursor
 ---
-PS C:\Users\adamr\.cursor> git init
->> git add .
->> git commit -m "Initial Deployment of OVERSIGHT"
-git : Le terme «git» n'est pas reconnu comme nom 
-d'applet de commande, fonction, fichier de script 
-ou programme exécutable. Vérifiez l'orthographe du 
-nom, ou si un chemin d'accès existe, vérifiez que 
-le chemin d'accès est correct et réessayez.
-Au caractère Ligne:1 : 1
-+ git init
-+ ~~~
-    + CategoryInfo          : ObjectNotFound: (git  
-   :String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundExcep  
-   tion
-
-git : Le terme «git» n'est pas reconnu comme nom 
-d'applet de commande, fonction, fichier de script   
-ou programme exécutable. Vérifiez l'orthographe du  
-nom, ou si un chemin d'accès existe, vérifiez que 
-le chemin d'accès est correct et réessayez.
-Au caractère Ligne:2 : 1
-+ git add .
-+ ~~~
-    + CategoryInfo          : ObjectNotFound: (git  
-   :String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundExcep  
-   tion
-
-git : Le terme «git» n'est pas reconnu comme nom 
-d'applet de commande, fonction, fichier de script   
-ou programme exécutable. Vérifiez l'orthographe du  
-nom, ou si un chemin d'accès existe, vérifiez que   
-le chemin d'accès est correct et réessayez.
-Au caractère Ligne:3 : 1
-+ git commit -m "Initial Deployment of OVERSIGHT"   
-+ ~~~
-    + CategoryInfo          : ObjectNotFound: (git  
-   :String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundExcep  
-   tion
-
-PS C:\Users\adamr\.cursor> ^C
-PS C:\Users\adamr\.cursor> 
- *  History restored 
-
-PS C:\Users\adamr\.cursor> git init
->> git add .
->> git commit -m "Initial Deployment"
-Initialized empty Git repository in C:/Users/adamr/.cursor/.git/
-warning: in the working copy of 'argv.json', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'oversight-frontend/.gitignore', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'oversight-frontend/README.md', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'oversight-frontend/app/globals.css', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'oversight-frontend/app/layout.tsx', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'oversight-frontend/app/page.tsx', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'oversight-frontend/eslint.config.mjs', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'oversight-frontend/next.config.ts', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'oversight-frontend/package-lock.json', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'oversight-frontend/package.json', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'oversight-frontend/postcss.config.mjs', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'oversight-frontend/tsconfig.json', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-browser-extension/SERVER_METADATA.json', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-ide-browser/INSTRUCTIONS.md', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-ide-browser/SERVER_METADATA.json', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'projects/c-Users-adamr-cursor/agent-transcripts/25700298-3bbf-4b31-a70d-c048c969b86b.txt', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/1.txt', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/2.txt', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/3.txt', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/4.txt', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'skills-cursor/create-rule/SKILL.md', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'skills-cursor/create-skill/SKILL.md', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'skills-cursor/create-subagent/SKILL.md', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'skills-cursor/migrate-to-skills/SKILL.md', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'skills-cursor/update-cursor-settings/SKILL.md', LF will be replaced by CRLF the next time Git touches it
-Author identity unknown
-
-*** Please tell me who you are.
-
-Run
-
-  git config --global user.email "you@example.com"  
-  git config --global user.name "Your Name"
-
-to set your account's default identity.
-Omit --global to set the identity only in this repository.
-
-fatal: unable to auto-detect email address (got 'adamr@SABER.(none)')
-PS C:\Users\adamr\.cursor> 
-PS C:\Users\adamr\.cursor> git config --global user.email "adam@oversight.com"
-PS C:\Users\adamr\.cursor> git config --global user.name "Adam Oversight"
-PS C:\Users\adamr\.cursor> git commit -m "Initial Deployment"
-[master (root-commit) 36d6f34] Initial Deployment
- 42 files changed, 9190 insertions(+)
- create mode 100644 .vscode/settings.json
- create mode 100644 ai-tracking/ai-code-tracking.db 
- create mode 100644 argv.json
- create mode 100644 extensions/extensions.json      
- create mode 100644 ide_state.json
- create mode 100644 oversight-backend/.env
- create mode 100644 oversight-backend/__pycache__/main.cpython-314.pyc
- create mode 100644 oversight-backend/main.py       
- create mode 100644 oversight-frontend/.gitignore   
- create mode 100644 oversight-frontend/README.md    
- create mode 100644 oversight-frontend/app/favicon.ico
- create mode 100644 oversight-frontend/app/globals.css
- create mode 100644 oversight-frontend/app/layout.tsx
  create mode 100644 oversight-frontend/app/page.tsx 
  create mode 100644 oversight-frontend/eslint.config.mjs
  create mode 100644 oversight-frontend/next.config.ts
@@ -147,4 +40,30 @@ warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/4.txt',
 [master 4a1369a] Initial Deployment
  2 files changed, 90 insertions(+)
 PS C:\Users\adamr\.cursor> git add .
->> git commit -m "Add requirements for server"
+>> git commit -m "Add requirements for server"      
+warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/4.txt', LF will be replaced by CRLF the next time Git touches it
+[master 4485562] Add requirements for server
+ 4 files changed, 15 insertions(+), 2 deletions(-)  
+ create mode 100644 oversight-backend/requirements.txt
+PS C:\Users\adamr\.cursor> git remote add origin https://github.com/saivenses59-hub/oversight-protocol..git
+>>
+PS C:\Users\adamr\.cursor> git branch -M main
+>>
+PS C:\Users\adamr\.cursor> git push -u origin main
+info: please complete authentication in your browser...
+Enumerating objects: 85, done.
+Counting objects: 100% (85/85), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (71/71), done.
+Writing objects: 100% (85/85), 108.93 KiB | 3.63 MiB/s, done.
+Total 85 (delta 12), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (12/12), done.       
+To https://github.com/saivenses59-hub/oversight-protocol..git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+PS C:\Users\adamr\.cursor> 
+ *  History restored 
+
+PS C:\Users\adamr\.cursor> git add .
+>> git commit -m "Point frontend to live server"
+>> git push

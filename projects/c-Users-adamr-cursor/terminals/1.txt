@@ -1,14 +1,8 @@
 ---
-pid: 604
+pid: 9948
 cwd: |
   C:\Users\adamr\.cursor
 ---
-✓ Ready in 1706ms
- GET / 200 in 898ms (compile: 492ms, render: 406ms)
- GET / 200 in 159ms (compile: 6ms, render: 152ms)
- GET / 200 in 97ms (compile: 8ms, render: 90ms)
- GET / 200 in 49ms (compile: 7ms, render: 43ms)
- GET / 200 in 470ms (compile: 145ms, render: 325ms)
 ✓ Compiled in 954ms
 PS C:\Users\adamr\.cursor\oversight-frontend> 
                                               npm run dev
@@ -88,6 +82,9 @@ PS C:\Users\adamr\.cursor\oversight-frontend>
  GET / 200 in 44ms (compile: 4ms, render: 40ms)
  GET / 200 in 41ms (compile: 4ms, render: 37ms)
 
+ *  History restored 
+
+PS C:\Users\adamr\.cursor>
  *  History restored 
 
 PS C:\Users\adamr\.cursor>

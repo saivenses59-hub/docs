@@ -1,6 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 
+// CONFIGURATION: YOUR LIVE BACKEND URL
+const API_URL = "https://oversight-protocol.onrender.com";
+
 export default function Home() {
   const [agentName, setAgentName] = useState("");
   const [status, setStatus] = useState("");
@@ -13,7 +16,7 @@ export default function Home() {
 
   const fetchAgents = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/agents");
+      const response = await fetch(`${API_URL}/agents`);
       const data = await response.json();
       if (data.status === "SUCCESS") {
         setAgents(data.data);
@@ -27,7 +30,7 @@ export default function Home() {
   const createAgent = async () => {
     setStatus("Deploying Agent...");
     try {
-      const response = await fetch("http://127.0.0.1:8000/create-agent", {
+      const response = await fetch(`${API_URL}/create-agent`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: agentName }),
@@ -41,14 +44,14 @@ export default function Home() {
       } else {
         setStatus("Error: " + JSON.stringify(data));
       }
-    } catch (error) { setStatus("System Error"); }
+    } catch (error) { setStatus("System Error: " + String(error)); }
   };
 
   // 3. DEPOSIT
   const deposit = async (wallet: string) => {
     setStatus(`Depositing...`);
     try {
-      const response = await fetch("http://127.0.0.1:8000/deposit", {
+      const response = await fetch(`${API_URL}/deposit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ wallet_address: wallet, amount: 100 }), 
@@ -61,11 +64,11 @@ export default function Home() {
     } catch (e) { setStatus("Network Error"); }
   };
 
-  // 4. SPEND FUNCTION (Supports Variable Amounts)
+  // 4. SPEND FUNCTION
   const spend = async (wallet: string, amountToSpend: number) => {
     setStatus(`Processing Payment of $${amountToSpend}...`);
     try {
-      const response = await fetch("http://127.0.0.1:8000/process-payment", {
+      const response = await fetch(`${API_URL}/process-payment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ wallet_address: wallet, amount: amountToSpend, vendor: "AWS" }), 

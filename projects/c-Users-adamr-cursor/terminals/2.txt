@@ -1,12 +1,9 @@
 ---
-pid: 15872
+pid: 23192
 cwd: |
   C:\Users\adamr\.cursor
 ---
-INFO:     127.0.0.1:61633 - "POST /deposit HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57723 - "GET /agents HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57723 - "GET /agents HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57723 - "GET /agents HTTP/1.1" 200 OK
+ 200 OK
 INFO:     127.0.0.1:61633 - "POST /deposit HTTP/1.1" 200 OK
 INFO:     127.0.0.1:57723 - "GET /agents HTTP/1.1" 200 OK
 INFO:     127.0.0.1:57723 - "GET /agents HTTP/1.1" 200 OK
@@ -67,6 +64,9 @@ INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     127.0.0.1:56621 - "GET /favicon.ico HTTP/1.1" 404 Not Found
 
+ *  History restored 
+
+PS C:\Users\adamr\.cursor> 
  *  History restored 
 
 PS C:\Users\adamr\.cursor>
