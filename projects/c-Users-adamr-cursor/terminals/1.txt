@@ -1,0 +1,93 @@
+---
+pid: 604
+cwd: |
+  C:\Users\adamr\.cursor
+---
+✓ Ready in 1706ms
+ GET / 200 in 898ms (compile: 492ms, render: 406ms)
+ GET / 200 in 159ms (compile: 6ms, render: 152ms)
+ GET / 200 in 97ms (compile: 8ms, render: 90ms)
+ GET / 200 in 49ms (compile: 7ms, render: 43ms)
+ GET / 200 in 470ms (compile: 145ms, render: 325ms)
+✓ Compiled in 954ms
+PS C:\Users\adamr\.cursor\oversight-frontend> 
+                                              npm run dev
+
+> oversight-frontend@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.43.112:3000    
+
+✓ Starting...
+✓ Ready in 1479ms
+ GET / 200 in 1010ms (compile: 585ms, render: 425ms)
+ GET / 200 in 160ms (compile: 8ms, render: 152ms)
+ GET / 200 in 68ms (compile: 15ms, render: 54ms)
+ GET / 200 in 119ms (compile: 8ms, render: 111ms)
+ GET / 200 in 80ms (compile: 5ms, render: 75ms)
+ GET / 200 in 828ms (compile: 639ms, render: 190ms)
+ GET / 200 in 79ms (compile: 7ms, render: 71ms)
+PS C:\Users\adamr\.cursor\oversight-frontend> 
+                                              python -m uvicorn main:app --reload
+INFO:     Will watch for changes in these directories: ['C:\\Users\\adamr\\.cursor\\oversight-frontend']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [5048] using
+ StatReload
+ERROR:    Error loading ASGI app. Could not import module "main".
+INFO:     Stopping reloader process [5048]
+PS C:\Users\adamr\.cursor\oversight-frontend> python -m uvicorn main:app --reload
+INFO:     Will watch for changes in these directories: ['C:\\Users\\adamr\\.cursor\\oversight-frontend']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [20372] using StatReload
+ERROR:    Error loading ASGI app. Could not import module "main".
+INFO:     Stopping reloader process [20372]
+PS C:\Users\adamr\.cursor\oversight-frontend> npm run dev
+
+> oversight-frontend@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.43.112:3000    
+
+✓ Starting...
+✓ Ready in 1833ms
+PS C:\Users\adamr\.cursor\oversight-frontend> 
+                                              npm run dev
+
+> oversight-frontend@0.1.0 dev
+> next dev
+▲ Next.js 16.1.6 (Turbopack)
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.43.112:3000
+
+✓ Starting...
+✓ Ready in 1394ms
+ GET / 200 in 1906ms (compile: 1640ms, render: 266ms)
+PS C:\Users\adamr\.cursor\oversight-frontend> 
+                                              npm run dev
+
+> oversight-frontend@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.43.112:3000
+
+✓ Starting...
+✓ Ready in 1510ms
+ GET / 200 in 589ms (compile: 438ms, render: 150ms)
+ GET / 200 in 455ms (compile: 111ms, render: 344ms)
+ GET / 200 in 74ms (compile: 6ms, render: 68ms)
+ GET / 200 in 59ms (compile: 6ms, render: 54ms)
+ GET / 200 in 61ms (compile: 6ms, render: 55ms)
+ GET / 200 in 62ms (compile: 5ms, render: 57ms)
+ GET / 200 in 44ms (compile: 4ms, render: 40ms)
+ GET / 200 in 41ms (compile: 4ms, render: 37ms)
+
+ *  History restored 
+
+PS C:\Users\adamr\.cursor>

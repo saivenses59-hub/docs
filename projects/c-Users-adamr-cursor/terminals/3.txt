@@ -1,0 +1,80 @@
+---
+pid: 28140
+cwd: |
+  C:\Users\adamr\.cursor
+---
+PS C:\Users\adamr\.cursor> python rogue_bot.py      
+C:\Python314\python.exe: can't open file 'C:\\Users\\adamr\\.cursor\\rogue_bot.py': [Errno 2] No such file or directory
+PS C:\Users\adamr\.cursor> python Untitled-2
+C:\Python314\python.exe: can't open file 'C:\\Users\\adamr\\.cursor\\Untitled-2': [Errno 2] No such file or directory
+PS C:\Users\adamr\.cursor> ^C
+PS C:\Users\adamr\.cursor> python untitled-2
+C:\Python314\python.exe: can't open file 'C:\\Users\\adamr\\.cursor\\untitled-2': [Errno 2] No such file or directory
+PS C:\Users\adamr\.cursor> ^C
+PS C:\Users\adamr\.cursor> python rogue_bot.py
+🤖 INITIALIZING ROGUE BOT SIMULATION...
+
+[STEP 1] Creating Identity...
+----------------------------------------
+✅ Created Agent: ROGUE_AI_BOT
+💳 Wallet Issued: 0x427a3ffa020801640ff48f20fb11a39df001daaa
+
+[STEP 2] Hacking... I mean, Receiving Funds...      
+----------------------------------------
+💰 Received Deposit: $500.00
+
+[STEP 3] ATTEMPTING TO BUY A LAMBORGHINI ($600)...  
+----------------------------------------
+🛡️ BLOCKED BY OVERSIGHT PROTOCOL!
+REASON: OVER LIMIT (Max: $50.0)
+
+[STEP 4] Fine... Attempting to buy Coffee ($5)...   
+----------------------------------------
+✅ APPROVED. New Balance: $495.0
+
+🏁 SIMULATION COMPLETE.
+PS C:\Users\adamr\.cursor> ^C
+PS C:\Users\adamr\.cursor> rogue_bot.py 
+rogue_bot.py : Le terme «rogue_bot.py» n'est pas 
+reconnu comme nom d'applet de commande, fonction,   
+fichier de script ou programme exécutable.
+Vérifiez l'orthographe du nom, ou si un chemin      
+d'accès existe, vérifiez que le chemin d'accès est  
+correct et réessayez.
+Au caractère Ligne:1 : 1
++ rogue_bot.py
++ ~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (rog  
+   ue_bot.py:String) [], CommandNotFoundException   
+    + FullyQualifiedErrorId : CommandNotFoundExcep  
+   tion
+
+
+Suggestion [3,General]: La commande rogue_bot.py est introuvable, mais elle existe à l''emplacement actuel. Par défaut, Windows PowerShell ne charge aucune commande à partir de l''emplacement actuel. Si vous approuvez cette commande, tapez « .\rogue_bot.py » à la place. Pour en savoir plus, voir "get-help about_Command_Precedence".
+PS C:\Users\adamr\.cursor> ^C
+PS C:\Users\adamr\.cursor> python rogue_bot.py
+🤖 INITIALIZING ROGUE BOT SIMULATION...
+
+[STEP 1] Creating Identity...
+----------------------------------------
+✅ Created Agent: ROGUE_AI_BOT
+💳 Wallet Issued: 0x6a7b910b24a7ac0a108358483d6462a153e7eff1
+
+[STEP 2] Hacking... I mean, Receiving Funds...      
+----------------------------------------
+💰 Received Deposit: $500.00
+
+[STEP 3] ATTEMPTING TO BUY A LAMBORGHINI ($600)...  
+----------------------------------------
+🛡️ BLOCKED BY OVERSIGHT PROTOCOL!
+REASON: OVER LIMIT (Max: $50.0)
+
+[STEP 4] Fine... Attempting to buy Coffee ($5)...   
+----------------------------------------
+✅ APPROVED. New Balance: $495.0
+
+🏁 SIMULATION COMPLETE.
+PS C:\Users\adamr\.cursor> 
+ *  History restored 
+
+PS C:\Users\adamr\.cursor>

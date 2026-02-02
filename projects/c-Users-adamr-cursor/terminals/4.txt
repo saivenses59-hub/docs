@@ -1,0 +1,54 @@
+---
+pid: 9044
+cwd: |
+  C:\Users\adamr\.cursor
+---
+PS C:\Users\adamr\.cursor> git init
+>> git add .
+>> git commit -m "Initial Deployment of OVERSIGHT"
+git : Le terme «git» n'est pas reconnu comme nom 
+d'applet de commande, fonction, fichier de script 
+ou programme exécutable. Vérifiez l'orthographe du 
+nom, ou si un chemin d'accès existe, vérifiez que 
+le chemin d'accès est correct et réessayez.
+Au caractère Ligne:1 : 1
++ git init
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (git  
+   :String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundExcep  
+   tion
+
+git : Le terme «git» n'est pas reconnu comme nom 
+d'applet de commande, fonction, fichier de script   
+ou programme exécutable. Vérifiez l'orthographe du  
+nom, ou si un chemin d'accès existe, vérifiez que 
+le chemin d'accès est correct et réessayez.
+Au caractère Ligne:2 : 1
++ git add .
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (git  
+   :String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundExcep  
+   tion
+
+git : Le terme «git» n'est pas reconnu comme nom 
+d'applet de commande, fonction, fichier de script   
+ou programme exécutable. Vérifiez l'orthographe du  
+nom, ou si un chemin d'accès existe, vérifiez que   
+le chemin d'accès est correct et réessayez.
+Au caractère Ligne:3 : 1
++ git commit -m "Initial Deployment of OVERSIGHT"   
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (git  
+   :String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundExcep  
+   tion
+
+PS C:\Users\adamr\.cursor> ^C
+PS C:\Users\adamr\.cursor> 
+ *  History restored 
+
+PS C:\Users\adamr\.cursor> git init
+>> git add .
+>> git commit -m "Initial Deployment"
