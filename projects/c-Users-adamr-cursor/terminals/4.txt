@@ -52,3 +52,93 @@ PS C:\Users\adamr\.cursor>
 PS C:\Users\adamr\.cursor> git init
 >> git add .
 >> git commit -m "Initial Deployment"
+Initialized empty Git repository in C:/Users/adamr/.cursor/.git/
+warning: in the working copy of 'argv.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-frontend/.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-frontend/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-frontend/app/globals.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-frontend/app/layout.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-frontend/app/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-frontend/eslint.config.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-frontend/next.config.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-frontend/package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-frontend/package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-frontend/postcss.config.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-frontend/tsconfig.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-browser-extension/SERVER_METADATA.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-ide-browser/INSTRUCTIONS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-ide-browser/SERVER_METADATA.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/c-Users-adamr-cursor/agent-transcripts/25700298-3bbf-4b31-a70d-c048c969b86b.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/1.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/2.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/3.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/4.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'skills-cursor/create-rule/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'skills-cursor/create-skill/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'skills-cursor/create-subagent/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'skills-cursor/migrate-to-skills/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'skills-cursor/update-cursor-settings/SKILL.md', LF will be replaced by CRLF the next time Git touches it
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"  
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'adamr@SABER.(none)')
+PS C:\Users\adamr\.cursor> 
+PS C:\Users\adamr\.cursor> git config --global user.email "adam@oversight.com"
+PS C:\Users\adamr\.cursor> git config --global user.name "Adam Oversight"
+PS C:\Users\adamr\.cursor> git commit -m "Initial Deployment"
+[master (root-commit) 36d6f34] Initial Deployment
+ 42 files changed, 9190 insertions(+)
+ create mode 100644 .vscode/settings.json
+ create mode 100644 ai-tracking/ai-code-tracking.db 
+ create mode 100644 argv.json
+ create mode 100644 extensions/extensions.json      
+ create mode 100644 ide_state.json
+ create mode 100644 oversight-backend/.env
+ create mode 100644 oversight-backend/__pycache__/main.cpython-314.pyc
+ create mode 100644 oversight-backend/main.py       
+ create mode 100644 oversight-frontend/.gitignore   
+ create mode 100644 oversight-frontend/README.md    
+ create mode 100644 oversight-frontend/app/favicon.ico
+ create mode 100644 oversight-frontend/app/globals.css
+ create mode 100644 oversight-frontend/app/layout.tsx
+ create mode 100644 oversight-frontend/app/page.tsx 
+ create mode 100644 oversight-frontend/eslint.config.mjs
+ create mode 100644 oversight-frontend/next.config.ts
+ create mode 100644 oversight-frontend/package-lock.json
+ create mode 100644 oversight-frontend/package.json 
+ create mode 100644 oversight-frontend/postcss.config.mjs
+ create mode 100644 oversight-frontend/public/file.svg
+ create mode 100644 oversight-frontend/public/globe.svg
+ create mode 100644 oversight-frontend/public/next.svg
+ create mode 100644 oversight-frontend/public/vercel.svg
+ create mode 100644 oversight-frontend/public/window.svg
+ create mode 100644 oversight-frontend/tsconfig.json
+ create mode 100644 projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-browser-extension/INSTRUCTIONS.md
+ create mode 100644 projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-browser-extension/SERVER_METADATA.json       
+ create mode 100644 projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-ide-browser/INSTRUCTIONS.md
+ create mode 100644 projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-ide-browser/SERVER_METADATA.json
+ create mode 100644 projects/c-Users-adamr-cursor/agent-transcripts/25700298-3bbf-4b31-a70d-c048c969b86b.txt
+ create mode 100644 projects/c-Users-adamr-cursor/terminals/1.txt
+ create mode 100644 projects/c-Users-adamr-cursor/terminals/2.txt
+ create mode 100644 projects/c-Users-adamr-cursor/terminals/3.txt
+ create mode 100644 projects/c-Users-adamr-cursor/terminals/4.txt
+ create mode 100644 requirements.txt
+ create mode 100644 rogue_bot.py
+ create mode 100644 sentence_analyzer.py
+ create mode 100644 skills-cursor/create-rule/SKILL.md
+ create mode 100644 skills-cursor/create-skill/SKILL.md
+ create mode 100644 skills-cursor/create-subagent/SKILL.md
+ create mode 100644 skills-cursor/migrate-to-skills/SKILL.md
+ create mode 100644 skills-cursor/update-cursor-settings/SKILL.md
+PS C:\Users\adamr\.cursor> git init
+>> git add .
+>> git commit -m "Initial Deployment"
