@@ -142,3 +142,9 @@ PS C:\Users\adamr\.cursor> git commit -m "Initial Deployment"
 PS C:\Users\adamr\.cursor> git init
 >> git add .
 >> git commit -m "Initial Deployment"
+Reinitialized existing Git repository in C:/Users/adamr/.cursor/.git/
+warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/4.txt', LF will be replaced by CRLF the next time Git touches it
+[master 4a1369a] Initial Deployment
+ 2 files changed, 90 insertions(+)
+PS C:\Users\adamr\.cursor> git add .
+>> git commit -m "Add requirements for server"
