@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import Analytics from "./Analytics"; 
 
-// CHANGE TO YOUR LIVE RENDER URL
-const API_URL = "https://oversight-protocol.onrender.com"; 
+// CONFIGURATION
+const API_URL = "http://127.0.0.1:8000"; 
 
 export default function Dashboard() {
   const [orgName, setOrgName] = useState("");
@@ -79,7 +79,6 @@ export default function Dashboard() {
     } catch (e) { setStatus("Network Error"); }
   };
 
-  // NEW: AUDIT EXPORT FUNCTION
   const exportAudit = () => {
     window.open(`${API_URL}/export-audit`, '_blank');
   }
@@ -93,18 +92,16 @@ export default function Dashboard() {
           <h1 className="text-3xl md:text-4xl font-bold tracking-widest text-white">OVERSIGHT<span className="text-green-600">_PROTOCOL</span></h1>
           <div className="text-xs text-gray-500 mt-1 uppercase tracking-widest">Institutional AI Banking Layer</div>
         </div>
-        <div className="text-right mt-4 md:mt-0 flex flex-col items-end gap-2">
-            <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <div className="text-xs border border-green-900 bg-green-900/20 px-3 py-1 text-green-400">SYSTEM: ONLINE</div>
-            </div>
+        
+        {/* THE YELLOW BUTTON */}
+        <div className="text-right mt-4 md:mt-0 flex flex-col items-end gap-3">
+            <div className="text-xs border border-green-900 bg-green-900/20 px-3 py-1 text-green-400">SYSTEM: ONLINE</div>
             
-            {/* THE CFO BUTTON */}
             <button 
                 onClick={exportAudit}
-                className="flex items-center gap-2 text-xs bg-white text-black font-bold px-4 py-2 hover:bg-gray-200 transition"
+                className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded-sm tracking-widest shadow-[0_0_15px_rgba(234,179,8,0.5)] transition"
             >
-                ⬇ EXPORT AUDIT LOG (CSV)
+                ⬇ DOWNLOAD CFO AUDIT
             </button>
         </div>
       </div>
