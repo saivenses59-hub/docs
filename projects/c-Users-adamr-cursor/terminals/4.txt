@@ -1,28 +1,9 @@
 ---
-pid: 35768
+pid: 16468
 cwd: |
   C:\Users\adamr\.cursor
 ---
- create mode 100644 oversight-frontend/app/page.tsx 
- create mode 100644 oversight-frontend/eslint.config.mjs
- create mode 100644 oversight-frontend/next.config.ts
- create mode 100644 oversight-frontend/package-lock.json
- create mode 100644 oversight-frontend/package.json 
- create mode 100644 oversight-frontend/postcss.config.mjs
- create mode 100644 oversight-frontend/public/file.svg
- create mode 100644 oversight-frontend/public/globe.svg
- create mode 100644 oversight-frontend/public/next.svg
- create mode 100644 oversight-frontend/public/vercel.svg
- create mode 100644 oversight-frontend/public/window.svg
- create mode 100644 oversight-frontend/tsconfig.json
- create mode 100644 projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-browser-extension/INSTRUCTIONS.md
- create mode 100644 projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-browser-extension/SERVER_METADATA.json       
- create mode 100644 projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-ide-browser/INSTRUCTIONS.md
- create mode 100644 projects/C-Users-adamr-AppData-Local-Temp-a248b183-6c5e-444c-b725-7a5ab59b4775/mcps/cursor-ide-browser/SERVER_METADATA.json
- create mode 100644 projects/c-Users-adamr-cursor/agent-transcripts/25700298-3bbf-4b31-a70d-c048c969b86b.txt
- create mode 100644 projects/c-Users-adamr-cursor/terminals/1.txt
- create mode 100644 projects/c-Users-adamr-cursor/terminals/2.txt
- create mode 100644 projects/c-Users-adamr-cursor/terminals/3.txt
+terminals/3.txt
  create mode 100644 projects/c-Users-adamr-cursor/terminals/4.txt
  create mode 100644 requirements.txt
  create mode 100644 rogue_bot.py
@@ -67,3 +48,27 @@ PS C:\Users\adamr\.cursor>
 PS C:\Users\adamr\.cursor> git add .
 >> git commit -m "Point frontend to live server"
 >> git push
+warning: in the working copy of 'oversight-frontend/app/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/1.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/2.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/3.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/4.txt', LF will be replaced by CRLF the next time Git touches it
+[main 4df82c1] Point frontend to live server
+ 7 files changed, 52 insertions(+), 131 deletions(-)
+Enumerating objects: 29, done.
+Counting objects: 100% (29/29), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (14/14), done.
+Writing objects: 100% (15/15), 2.34 KiB | 800.00 KiB/s, done.
+Total 15 (delta 11), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (11/11), completed with 11 local objects.
+To https://github.com/saivenses59-hub/oversight-protocol..git
+   4485562..4df82c1  main -> main
+PS C:\Users\adamr\.cursor> ^C
+PS C:\Users\adamr\.cursor> 
+ *  History restored 
+
+PS C:\Users\adamr\.cursor> 
+ *  History restored 
+
+PS C:\Users\adamr\.cursor>

@@ -1,11 +1,8 @@
 ---
-pid: 9392
+pid: 28052
 cwd: |
   C:\Users\adamr\.cursor
 ---
-s\\adamr\\.cursor\\rogue_bot.py': [Errno 2] No such file or directory
-PS C:\Users\adamr\.cursor> python Untitled-2
-C:\Python314\python.exe: can't open file 'C:\\Users\\adamr\\.cursor\\Untitled-2': [Errno 2] No such file or directory
 PS C:\Users\adamr\.cursor> ^C
 PS C:\Users\adamr\.cursor> python untitled-2
 C:\Python314\python.exe: can't open file 'C:\\Users\\adamr\\.cursor\\untitled-2': [Errno 2] No such file or directory
@@ -73,6 +70,12 @@ REASON: OVER LIMIT (Max: $50.0)
 ✅ APPROVED. New Balance: $495.0
 
 🏁 SIMULATION COMPLETE.
+PS C:\Users\adamr\.cursor> 
+ *  History restored 
+
+PS C:\Users\adamr\.cursor> 
+ *  History restored 
+
 PS C:\Users\adamr\.cursor> 
  *  History restored 
 

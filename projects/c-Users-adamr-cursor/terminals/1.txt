@@ -1,90 +1,143 @@
 ---
-pid: 9948
+pid: 9680
 cwd: |
   C:\Users\adamr\.cursor
 ---
-✓ Compiled in 954ms
-PS C:\Users\adamr\.cursor\oversight-frontend> 
-                                              npm run dev
-
-> oversight-frontend@0.1.0 dev
-> next dev
-
-▲ Next.js 16.1.6 (Turbopack)
-- Local:         http://localhost:3000
-- Network:       http://192.168.43.112:3000    
-
-✓ Starting...
-✓ Ready in 1479ms
- GET / 200 in 1010ms (compile: 585ms, render: 425ms)
- GET / 200 in 160ms (compile: 8ms, render: 152ms)
- GET / 200 in 68ms (compile: 15ms, render: 54ms)
- GET / 200 in 119ms (compile: 8ms, render: 111ms)
- GET / 200 in 80ms (compile: 5ms, render: 75ms)
- GET / 200 in 828ms (compile: 639ms, render: 190ms)
- GET / 200 in 79ms (compile: 7ms, render: 71ms)
-PS C:\Users\adamr\.cursor\oversight-frontend> 
-                                              python -m uvicorn main:app --reload
-INFO:     Will watch for changes in these directories: ['C:\\Users\\adamr\\.cursor\\oversight-frontend']
-INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [5048] using
- StatReload
-ERROR:    Error loading ASGI app. Could not import module "main".
-INFO:     Stopping reloader process [5048]
-PS C:\Users\adamr\.cursor\oversight-frontend> python -m uvicorn main:app --reload
-INFO:     Will watch for changes in these directories: ['C:\\Users\\adamr\\.cursor\\oversight-frontend']
-INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [20372] using StatReload
-ERROR:    Error loading ASGI app. Could not import module "main".
-INFO:     Stopping reloader process [20372]
-PS C:\Users\adamr\.cursor\oversight-frontend> npm run dev
-
-> oversight-frontend@0.1.0 dev
-> next dev
-
-▲ Next.js 16.1.6 (Turbopack)
-- Local:         http://localhost:3000
-- Network:       http://192.168.43.112:3000    
-
-✓ Starting...
-✓ Ready in 1833ms
-PS C:\Users\adamr\.cursor\oversight-frontend> 
-                                              npm run dev
-
-> oversight-frontend@0.1.0 dev
-> next dev
-▲ Next.js 16.1.6 (Turbopack)
-▲ Next.js 16.1.6 (Turbopack)
-- Local:         http://localhost:3000
-- Network:       http://192.168.43.112:3000
-
-✓ Starting...
-✓ Ready in 1394ms
- GET / 200 in 1906ms (compile: 1640ms, render: 266ms)
-PS C:\Users\adamr\.cursor\oversight-frontend> 
-                                              npm run dev
-
-> oversight-frontend@0.1.0 dev
-> next dev
-
-▲ Next.js 16.1.6 (Turbopack)
-- Local:         http://localhost:3000
-- Network:       http://192.168.43.112:3000
-
-✓ Starting...
-✓ Ready in 1510ms
- GET / 200 in 589ms (compile: 438ms, render: 150ms)
- GET / 200 in 455ms (compile: 111ms, render: 344ms)
- GET / 200 in 74ms (compile: 6ms, render: 68ms)
- GET / 200 in 59ms (compile: 6ms, render: 54ms)
- GET / 200 in 61ms (compile: 6ms, render: 55ms)
- GET / 200 in 62ms (compile: 5ms, render: 57ms)
- GET / 200 in 44ms (compile: 4ms, render: 40ms)
- GET / 200 in 41ms (compile: 4ms, render: 37ms)
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 755, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 893, in get_code
+  File "<frozen importlib._bootstrap_external>", line 823, in source_to_code
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "C:\Users\adamr\.cursor\oversight-backend\main.py", line 225
+    from fastapi.responses import StreamingResponse 
+    ^^^^
+SyntaxError: invalid syntax
+WARNING:  StatReload detected changes in 'main.py'. Reloading...
+ Process SpawnProcess-3:
+Traceback (most recent call last):
+  File "C:\Python314\Lib\multiprocessing\process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Python314\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)       
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^       
+  File "C:\Users\adamr\AppData\Roaming\Python\Python314\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\adamr\AppData\Roaming\Python\Python314\site-packages\uvicorn\server.py", line 67, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())        
+  File "C:\Python314\Lib\asyncio\runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Python314\Lib\asyncio\runners.py", line 127, in run
+    return self._loop.run_until_complete(task)      
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^      
+  File "C:\Python314\Lib\asyncio\base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\adamr\AppData\Roaming\Python\Python314\site-packages\uvicorn\server.py", line 71, in serve
+    await self._serve(sockets)
+  File "C:\Users\adamr\AppData\Roaming\Python\Python314\site-packages\uvicorn\server.py", line 78, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "C:\Users\adamr\AppData\Roaming\Python\Python314\site-packages\uvicorn\config.py", line 439, in load
+    self.loaded_app = import_from_string(self.app)  
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^  
+  File "C:\Users\adamr\AppData\Roaming\Python\Python314\site-packages\uvicorn\importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)    
+  File "C:\Python314\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 755, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 893, in get_code
+  File "<frozen importlib._bootstrap_external>", line 823, in source_to_code
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "C:\Users\adamr\.cursor\oversight-backend\main.py", line 225
+    from fastapi.responses import StreamingResponse 
+    ^^^^
+SyntaxError: invalid syntax
 
  *  History restored 
 
-PS C:\Users\adamr\.cursor>
- *  History restored 
+PS C:\Users\adamr\.cursor> ^C
+PS C:\Users\adamr\.cursor>  git add ., git commit -m "Add Audit", git push
+error: unknown switch `m'
+usage: git add [<options>] [--] <pathspec>...
 
-PS C:\Users\adamr\.cursor>
+    -n, --[no-]dry-run    dry run
+    -v, --[no-]verbose    be verbose
+
+    -i, --[no-]interactive
+                          interactive picking       
+    -p, --[no-]patch      select hunks interactively
+    -U, --unified <n>     generate diffs with <n> lines context
+    --inter-hunk-context <n>
+                          show context between diff hunks up to the specified number of lines
+    -e, --[no-]edit       edit current diff and apply
+    -f, --[no-]force      allow adding otherwise ignored files
+    -u, --[no-]update     update tracked files      
+    --[no-]renormalize    renormalize EOL of tracked files (implies -u)
+    -N, --[no-]intent-to-add
+                          record only the fact that the path will be added later
+    -A, --[no-]all        add changes from all tracked and untracked files
+    --[no-]ignore-removal ignore paths removed in the working tree (same as --no-all)
+    --[no-]refresh        don't add, only refresh the index
+    --[no-]ignore-errors  just skip files which cannot be added because of errors
+    --[no-]ignore-missing check if - even missing - files are ignored in dry run
+    --[no-]sparse         allow updating entries outside of the sparse-checkout cone
+    --[no-]chmod (+|-)x   override the executable bit of the listed files
+    --[no-]pathspec-from-file <file>
+                          read pathspec from file   
+    --[no-]pathspec-file-nul
+                          with --pathspec-from-file, pathspec elements are separated with NUL character 
+
+PS C:\Users\adamr\.cursor> npm run dev 
+npm : Impossible de charger le fichier C:\Program 
+Files\nodejs\npm.ps1, car l’exécution de scripts    
+est désactivée sur ce système. Pour plus
+d’informations, consultez about_Execution_Policies  
+à l’adresse
+https://go.microsoft.com/fwlink/?LinkID=135170.     
+Au caractère Ligne:1 : 1
++ npm run dev
++ ~~~
+    + CategoryInfo          : Erreur de sécurité:   
+   (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess    
+PS C:\Users\adamr\.cursor> cs oversight-frontend  
+cs : Le terme «cs» n'est pas reconnu comme nom 
+d'applet de commande, fonction, fichier de script   
+ou programme exécutable. Vérifiez l'orthographe du  
+nom, ou si un chemin d'accès existe, vérifiez que   
+le chemin d'accès est correct et réessayez.
+Au caractère Ligne:1 : 1
++ cs oversight-frontend
++ ~~
+    + CategoryInfo          : ObjectNotFound: (cs:  
+   String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundExcep  
+   tion
+
+PS C:\Users\adamr\.cursor> cs oversight-backend
+cs : Le terme «cs» n'est pas reconnu comme nom 
+d'applet de commande, fonction, fichier de script   
+ou programme exécutable. Vérifiez l'orthographe du  
+nom, ou si un chemin d'accès existe, vérifiez que   
+le chemin d'accès est correct et réessayez.
+Au caractère Ligne:1 : 1
++ cs oversight-backend
++ ~~
+    + CategoryInfo          : ObjectNotFound: (cs:  
+   String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundExcep  
+   tion
+
+PS C:\Users\adamr\.cursor> git add .
+>> git commit -m "Add Audit Export Endpoint"        
+>> git push

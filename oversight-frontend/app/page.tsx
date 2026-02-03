@@ -1,171 +1,109 @@
-"use client";
-import { useState, useEffect } from "react";
+import Link from "next/link";
 
-// CONFIGURATION: YOUR LIVE BACKEND URL
-const API_URL = "https://oversight-protocol.onrender.com";
-
-export default function Home() {
-  const [agentName, setAgentName] = useState("");
-  const [status, setStatus] = useState("");
-  const [agents, setAgents] = useState<any[]>([]);
-
-  // 1. LOAD DATA ON STARTUP
-  useEffect(() => {
-    fetchAgents();
-  }, []);
-
-  const fetchAgents = async () => {
-    try {
-      const response = await fetch(`${API_URL}/agents`);
-      const data = await response.json();
-      if (data.status === "SUCCESS") {
-        setAgents(data.data);
-      }
-    } catch (e) {
-      console.error("Backend Offline");
-    }
-  };
-
-  // 2. CREATE AGENT
-  const createAgent = async () => {
-    setStatus("Deploying Agent...");
-    try {
-      const response = await fetch(`${API_URL}/create-agent`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: agentName }),
-      });
-      const data = await response.json();
-      
-      if (data.status === "SUCCESS") {
-        setStatus("Agent Deployed.");
-        setAgentName("");
-        fetchAgents(); // Refresh the list from DB
-      } else {
-        setStatus("Error: " + JSON.stringify(data));
-      }
-    } catch (error) { setStatus("System Error: " + String(error)); }
-  };
-
-  // 3. DEPOSIT
-  const deposit = async (wallet: string) => {
-    setStatus(`Depositing...`);
-    try {
-      const response = await fetch(`${API_URL}/deposit`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ wallet_address: wallet, amount: 100 }), 
-      });
-      const data = await response.json();
-      if (data.status === "SUCCESS") {
-        setStatus(`Deposit Confirmed.`);
-        fetchAgents(); // Refresh balances
-      }
-    } catch (e) { setStatus("Network Error"); }
-  };
-
-  // 4. SPEND FUNCTION
-  const spend = async (wallet: string, amountToSpend: number) => {
-    setStatus(`Processing Payment of $${amountToSpend}...`);
-    try {
-      const response = await fetch(`${API_URL}/process-payment`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ wallet_address: wallet, amount: amountToSpend, vendor: "AWS" }), 
-      });
-      const data = await response.json();
-      
-      if (data.status === "APPROVED") {
-        setStatus(`Payment Approved.`);
-        fetchAgents(); 
-      } else if (data.status === "DENIED") {
-        setStatus(`DENIED: ${data.detail}`);
-      }
-    } catch (e) { setStatus("Network Error"); }
-  };
-
+export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-black text-green-500 font-mono p-10">
-      <div className="border-b border-green-800 pb-4 mb-10 flex justify-between items-center">
-        <div>
-          <h1 className="text-4xl font-bold tracking-widest">OVERSIGHT</h1>
-          <div className="text-xs text-green-800 mt-1">BANKING PROTOCOL FOR AI AGENTS</div>
+    <div className="min-h-screen bg-black text-white font-sans selection:bg-green-900">
+      {/* NAV */}
+      <nav className="border-b border-white/10 p-6 flex justify-between items-center backdrop-blur-md sticky top-0 z-50">
+        <div className="text-2xl font-bold tracking-tighter">OVERSIGHT.</div>
+        <div className="flex gap-6 text-sm font-medium text-gray-400">
+          <Link href="#features" className="hover:text-white transition">PROTOCOL</Link>
+          <Link href="#governance" className="hover:text-white transition">GOVERNANCE</Link>
+          <Link href="/dashboard" className="text-green-400 hover:text-green-300 transition">LOGIN_</Link>
         </div>
-        <div className="text-xs border border-green-800 px-3 py-1 rounded">SYSTEM: ONLINE</div>
-      </div>
+      </nav>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        
-        {/* LEFT: CONTROLS */}
-        <div className="border border-green-900 p-8 bg-gray-900/20 h-fit">
-          <h2 className="text-xl mb-6 border-b border-green-900/50 pb-2">ISSUE NEW PASSPORT</h2>
-          <div className="space-y-4">
-            <input 
-              type="text" 
-              value={agentName}
-              onChange={(e) => setAgentName(e.target.value)}
-              className="w-full bg-black border border-green-700 p-3 focus:outline-none"
-              placeholder="AGENT DESIGNATION (Ex: ALPHA_01)"
-            />
-            <button 
-              onClick={createAgent}
-              className="w-full bg-green-900 hover:bg-green-700 text-white p-3 font-bold tracking-widest"
-            >
-              GENERATE WALLET
+      {/* HERO */}
+      <section className="max-w-6xl mx-auto px-6 py-32 text-center">
+        <div className="inline-block border border-green-900 bg-green-900/10 text-green-400 px-4 py-1 rounded-full text-xs font-mono mb-8">
+          SYSTEM ONLINE: V1.0 STABLE
+        </div>
+        <h1 className="text-6xl md:text-8xl font-bold tracking-tighter mb-8 leading-tight">
+          The Central Bank <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-600">
+            For AI Agents.
+          </span>
+        </h1>
+        <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-12">
+          Identity, Spend Control, and Automated Tax Compliance for the Agentic Economy. 
+          Stop rogue AI spending before it settles.
+        </p>
+        <div className="flex justify-center gap-4">
+          <button className="bg-white text-black px-8 py-4 font-bold hover:bg-gray-200 transition rounded-sm">
+            READ WHITE PAPER
+          </button>
+          <Link href="/dashboard">
+            <button className="border border-white/20 px-8 py-4 font-bold hover:bg-white/10 transition rounded-sm">
+              DEPLOY NODE
             </button>
-            <div className="mt-4 text-sm opacity-80 min-h-[20px] text-yellow-400">
-              {status && <span>{'>'} {status}</span>}
-            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* STATS */}
+      <section className="border-y border-white/10 bg-white/5">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
+          <div className="p-12 text-center">
+            <div className="text-4xl font-bold font-mono mb-2">$0.00</div>
+            <div className="text-sm text-gray-500">FRAUD LOSSES</div>
+          </div>
+          <div className="p-12 text-center">
+            <div className="text-4xl font-bold font-mono mb-2">&lt; 200ms</div>
+            <div className="text-sm text-gray-500">LATENCY</div>
+          </div>
+          <div className="p-12 text-center">
+            <div className="text-4xl font-bold font-mono mb-2">100%</div>
+            <div className="text-sm text-gray-500">TAX COMPLIANCE</div>
           </div>
         </div>
+      </section>
 
-        {/* RIGHT: LIVE FEED */}
-        <div className="border border-green-900 p-8 bg-gray-900/20 h-[600px] overflow-y-auto">
-          <h2 className="text-xl mb-6 border-b border-green-900/50 pb-2">ACTIVE AGENT WALLETS ({agents.length})</h2>
-          <div className="space-y-4">
-            {agents.length === 0 && <span className="opacity-30 text-sm">Loading agents from database...</span>}
-            
-            {agents.map((agent, i) => (
-              <div key={i} className="border border-green-800 p-4 bg-green-900/10 hover:bg-green-900/20 transition">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-bold text-lg">{agent.name}</span>
-                  <div>
-                    <span className="text-xs text-green-700 mr-3">LIMIT: ${agent.limit || 50}</span>
-                    <span className="text-2xl font-bold text-white">${agent.balance}</span>
-                  </div>
-                </div>
-                
-                <div className="text-xs opacity-70 mb-1">WALLET ADDRESS:</div>
-                <div className="font-mono text-xs bg-black p-2 border border-green-900/50 text-green-300 break-all mb-4">
-                  {agent.wallet}
-                </div>
-
-                <div className="flex gap-2">
-                    <button 
-                        onClick={() => deposit(agent.wallet)}
-                        className="flex-1 bg-blue-900/50 hover:bg-blue-800 text-white text-xs py-2 border border-blue-700"
-                    >
-                        DEPOSIT $100
-                    </button>
-                    <button 
-                        onClick={() => spend(agent.wallet, 50)}
-                        className="flex-1 bg-red-900/50 hover:bg-red-800 text-white text-xs py-2 border border-red-700"
-                    >
-                        SPEND $50
-                    </button>
-                    <button 
-                        onClick={() => spend(agent.wallet, 1000)}
-                        className="flex-1 bg-purple-900/50 hover:bg-purple-800 text-white text-xs py-2 border border-purple-700 ml-2"
-                    >
-                        TRY $1000
-                    </button>
-                </div>
-              </div>
-            ))}
+      {/* GRID */}
+      <section id="features" className="max-w-6xl mx-auto px-6 py-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 className="text-4xl font-bold mb-6">The "Velvet Rope" for AI.</h2>
+            <p className="text-gray-400 text-lg mb-8 leading-relaxed">
+              Anonymous agents are a liability. Oversight enforces strict 
+              <strong> KYB (Know Your Business)</strong> checks. 
+              Only verified corporations can mint wallets. 
+              Unverified bots are blocked at the protocol level.
+            </p>
+            <ul className="space-y-4 font-mono text-sm text-green-400">
+              <li className="flex items-center gap-3">
+                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                Corporate Identity Binding
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                Deterministic Spend Limits
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                Vendor Whitelisting
+              </li>
+            </ul>
+          </div>
+          <div className="border border-white/10 bg-white/5 p-8 rounded-xl relative overflow-hidden">
+             {/* Fake Code Block Visual */}
+             <div className="font-mono text-xs text-gray-500">
+                <div className="mb-2 text-blue-400">POST /process-payment</div>
+                <div className="pl-4">{"{"}</div>
+                <div className="pl-8 text-white">"amount": 50000,</div>
+                <div className="pl-8 text-white">"vendor": "UNKNOWN_LLC"</div>
+                <div className="pl-4">{"}"}</div>
+                <div className="mt-4 text-red-500">error: TRANSACTION_DENIED</div>
+                <div className="pl-4">reason: OVER_LIMIT</div>
+             </div>
           </div>
         </div>
+      </section>
 
-      </div>
+      {/* FOOTER */}
+      <footer className="border-t border-white/10 py-12 text-center text-gray-600 text-sm">
+        <p>&copy; 2026 OVERSIGHT PROTOCOL INC. ALL RIGHTS RESERVED.</p>
+        <p className="mt-2">SAN FRANCISCO • NEW YORK • DUBAI</p>
+      </footer>
     </div>
   );
 }
