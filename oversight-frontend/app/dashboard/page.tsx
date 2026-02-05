@@ -1,203 +1,637 @@
-"use client";
-import { useState, useEffect } from "react";
-import Analytics from "./Analytics"; 
+'use client'
 
-// CONFIGURATION
-const API_URL = "http://127.0.0.1:8000"; 
+/**
+ * OVERSIGHT Dashboard - Production-Grade Frontend
+ * 
+ * CRITICAL FEATURES:
+ * - Idempotency keys on all mutations (prevents double-spend)
+ * - Safe null handling (no .toFixed crashes)
+ * - Real-time balance updates
+ * - Comprehensive error handling
+ * - Audit trail export
+ */
 
-export default function Dashboard() {
-  const [orgName, setOrgName] = useState("");
-  const [taxId, setTaxId] = useState("");
-  const [currentOrg, setCurrentOrg] = useState<any>(null); 
-  const [agentName, setAgentName] = useState("");
-  const [status, setStatus] = useState("");
-  const [agents, setAgents] = useState<any[]>([]);
+import { useState, useEffect } from 'react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Badge } from '@/components/ui/badge'
+import { 
+  LineChart, 
+  Line, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell
+} from 'recharts'
+import { 
+  AlertCircle, 
+  CheckCircle, 
+  TrendingUp, 
+  DollarSign, 
+  Download,
+  RefreshCw,
+  Shield
+} from 'lucide-react'
 
-  useEffect(() => { fetchAgents(); }, []);
+// ============================================================================
+// TYPES
+// ============================================================================
+interface Agent {
+  id: string
+  name: string
+  wallet_address: string
+  balance: number
+  daily_spent: number
+  daily_remaining: number
+  created_at: string
+}
 
+interface Transaction {
+  transaction_id: string
+  status: 'APPROVED' | 'DENIED'
+  vendor_paid: number
+  tax_collected: number
+  new_balance: number
+  detail: string
+  timestamp: string
+  idempotency_key: string
+}
+
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+const API_BASE_URL = "https://oversight-protocol.onrender.com"
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8']
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+export default function DashboardPage() {
+  // State
+  const [agents, setAgents] = useState<Agent[]>([])
+  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<string | null>(null)
+  
+  // Form state
+  const [selectedAgent, setSelectedAgent] = useState<string>('')
+  const [amount, setAmount] = useState<string>('')
+  const [vendor, setVendor] = useState<string>('')
+  const [processing, setProcessing] = useState(false)
+
+  // ========================================================================
+  // DATA FETCHING (with safe null handling)
+  // ========================================================================
   const fetchAgents = async () => {
     try {
-      const response = await fetch(`${API_URL}/agents`);
-      const data = await response.json();
-      if (data.status === "SUCCESS") setAgents(data.data);
-    } catch (e) { console.error("Backend Offline"); }
-  };
+      const response = await fetch(`${API_BASE_URL}/agents`)
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      
+      const data = await response.json()
+      
+      // ⚠️ CRITICAL: Safe null handling to prevent .toFixed crashes
+      const safeAgents = (data.agents || []).map((agent: any) => ({
+        ...agent,
+        balance: Number(agent.balance) || 0,
+        daily_spent: Number(agent.daily_spent) || 0,
+        daily_remaining: Number(agent.daily_remaining) || 0,
+      }))
+      
+      setAgents(safeAgents)
+      setError(null)
+    } catch (err) {
+      console.error('Failed to fetch agents:', err)
+      setError('Failed to load agents. Please refresh.')
+      setAgents([]) // Set empty array on error
+    }
+  }
 
-  const registerCompany = async () => {
-    setStatus("Verifying Corporate Identity...");
+  const fetchTransactions = async () => {
     try {
-        const response = await fetch(`${API_URL}/register-org`, {
-            method: "POST", headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name: orgName, tax_id: taxId }),
-        });
-        const data = await response.json();
-        if (data.status === "SUCCESS") {
-            setStatus("IDENTITY VERIFIED. ACCESS GRANTED.");
-            setCurrentOrg({ id: data.org_id, name: data.name });
-        } else { setStatus("VERIFICATION FAILED."); }
-    } catch (e) { setStatus("System Error"); }
-  };
+      const response = await fetch(`${API_BASE_URL}/transactions?limit=50`)
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      
+      const data = await response.json()
+      
+      // Safe null handling
+      const safeTxs = (data.transactions || []).map((tx: any) => ({
+        ...tx,
+        vendor_paid: Number(tx.vendor_paid) || 0,
+        tax_collected: Number(tx.tax_collected) || 0,
+        new_balance: Number(tx.new_balance) || 0,
+      }))
+      
+      setTransactions(safeTxs)
+    } catch (err) {
+      console.error('Failed to fetch transactions:', err)
+      setTransactions([]) // Set empty array on error
+    }
+  }
 
-  const createAgent = async () => {
-    if (!currentOrg) { setStatus("ERROR: MUST REGISTER ORGANIZATION FIRST."); return; }
-    setStatus("Deploying Agent...");
+  const loadData = async () => {
+    setLoading(true)
+    await Promise.all([fetchAgents(), fetchTransactions()])
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    loadData()
+  }, [])
+
+  // ========================================================================
+  // PAYMENT PROCESSING (with idempotency)
+  // ========================================================================
+  const handlePayment = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    // Validation
+    if (!selectedAgent || !amount || !vendor) {
+      setError('Please fill in all fields')
+      return
+    }
+
+    const amountNum = parseFloat(amount)
+    if (isNaN(amountNum) || amountNum <= 0) {
+      setError('Invalid amount')
+      return
+    }
+
+    const agent = agents.find(a => a.id === selectedAgent)
+    if (!agent) {
+      setError('Agent not found')
+      return
+    }
+
+    setProcessing(true)
+    setError(null)
+    setSuccess(null)
+
     try {
-      const response = await fetch(`${API_URL}/create-agent`, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: agentName, organization_id: currentOrg.id }),
-      });
-      const data = await response.json();
-      if (data.status === "SUCCESS") {
-        setStatus("Agent Deployed."); setAgentName(""); fetchAgents(); 
-      } else { setStatus("Error: " + data.detail); }
-    } catch (error) { setStatus("System Error"); }
-  };
+      // 🔑 CRITICAL: Generate idempotency key (prevents double-spend)
+      const idempotencyKey = `web_${crypto.randomUUID()}`
+      
+      console.log(`🔑 Generated idempotency key: ${idempotencyKey}`)
 
-  const deposit = async (wallet: string) => {
-    setStatus(`Depositing...`);
+      const response = await fetch(`${API_BASE_URL}/process-payment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          wallet_address: agent.wallet_address,
+          amount: amountNum,
+          vendor: vendor.trim(),
+          idempotency_key: idempotencyKey, // Critical: Include key
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.detail || `HTTP ${response.status}`)
+      }
+
+      // Handle response
+      if (data.status === 'APPROVED') {
+        setSuccess(
+          `✅ Payment approved! Vendor received $${(data.vendor_paid || 0).toFixed(2)}, ` +
+          `Tax: $${(data.tax_collected || 0).toFixed(2)}`
+        )
+        
+        // Reset form
+        setAmount('')
+        setVendor('')
+        
+        // Refresh data
+        await loadData()
+      } else {
+        setError(`❌ Payment denied: ${data.detail}`)
+      }
+    } catch (err: any) {
+      console.error('Payment error:', err)
+      setError(err.message || 'Payment failed. Please try again.')
+    } finally {
+      setProcessing(false)
+    }
+  }
+
+  // ========================================================================
+  // DEPOSIT FUNDS (with idempotency)
+  // ========================================================================
+  const handleDeposit = async (agentId: string) => {
+    const agent = agents.find(a => a.id === agentId)
+    if (!agent) return
+
+    const depositAmount = prompt('Enter deposit amount:', '100')
+    if (!depositAmount) return
+
+    const amount = parseFloat(depositAmount)
+    if (isNaN(amount) || amount <= 0) {
+      alert('Invalid amount')
+      return
+    }
+
     try {
-      const response = await fetch(`${API_URL}/deposit`, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ wallet_address: wallet, amount: 100 }), 
-      });
-      const data = await response.json();
-      if (data.status === "SUCCESS") { setStatus(`Deposit Confirmed.`); fetchAgents(); }
-    } catch (e) { setStatus("Network Error"); }
-  };
+      // 🔑 Generate idempotency key
+      const idempotencyKey = `deposit_${crypto.randomUUID()}`
 
-  const spend = async (wallet: string, amountToSpend: number) => {
-    setStatus(`Processing Payment...`);
-    try {
-      const response = await fetch(`${API_URL}/process-payment`, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ wallet_address: wallet, amount: amountToSpend, vendor: "AWS" }), 
-      });
-      const data = await response.json();
-      if (data.status === "APPROVED") {
-        setStatus(`APPROVED. Tax Withheld: $${data.tax_collected}`); fetchAgents(); 
-      } else if (data.status === "DENIED") { setStatus(`DENIED: ${data.detail}`); }
-    } catch (e) { setStatus("Network Error"); }
-  };
+      const response = await fetch(`${API_BASE_URL}/deposit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          wallet_address: agent.wallet_address,
+          amount: amount,
+          idempotency_key: idempotencyKey, // Critical: Include key
+        }),
+      })
 
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.detail || 'Deposit failed')
+      }
+
+      setSuccess(`💵 Deposited $${amount.toFixed(2)} successfully!`)
+      await loadData()
+    } catch (err: any) {
+      setError(err.message || 'Deposit failed')
+    }
+  }
+
+  // ========================================================================
+  // EXPORT AUDIT LOG
+  // ========================================================================
   const exportAudit = () => {
-    window.open(`${API_URL}/export-audit`, '_blank');
+    try {
+      const csvContent = [
+        ['Transaction ID', 'Status', 'Vendor Paid', 'Tax', 'Balance', 'Detail', 'Timestamp', 'Idempotency Key'].join(','),
+        ...transactions.map(tx => [
+          tx.transaction_id,
+          tx.status,
+          (tx.vendor_paid || 0).toFixed(2),
+          (tx.tax_collected || 0).toFixed(2),
+          (tx.new_balance || 0).toFixed(2),
+          `"${tx.detail}"`,
+          tx.timestamp,
+          tx.idempotency_key
+        ].join(','))
+      ].join('\n')
+
+      const blob = new Blob([csvContent], { type: 'text/csv' })
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `oversight-audit-${new Date().toISOString().split('T')[0]}.csv`
+      a.click()
+      window.URL.revokeObjectURL(url)
+
+      setSuccess('📥 Audit log exported successfully!')
+    } catch (err) {
+      setError('Failed to export audit log')
+    }
+  }
+
+  // ========================================================================
+  // CHARTS DATA (with safe calculations)
+  // ========================================================================
+  const spendingData = transactions
+    .filter(tx => tx.status === 'APPROVED')
+    .slice(0, 10)
+    .reverse()
+    .map(tx => ({
+      name: tx.transaction_id.substring(0, 8),
+      vendor: tx.vendor_paid || 0,
+      tax: tx.tax_collected || 0,
+    }))
+
+  const taxData = [
+    { 
+      name: 'Vendor Paid', 
+      value: transactions
+        .filter(tx => tx.status === 'APPROVED')
+        .reduce((sum, tx) => sum + (tx.vendor_paid || 0), 0) 
+    },
+    { 
+      name: 'Tax Collected', 
+      value: transactions
+        .filter(tx => tx.status === 'APPROVED')
+        .reduce((sum, tx) => sum + (tx.tax_collected || 0), 0) 
+    },
+  ]
+
+  // ========================================================================
+  // STATISTICS (with safe calculations)
+  // ========================================================================
+  const totalBalance = agents.reduce((sum, a) => sum + (a.balance || 0), 0)
+  const totalSpent = agents.reduce((sum, a) => sum + (a.daily_spent || 0), 0)
+  const totalTax = transactions
+    .filter(tx => tx.status === 'APPROVED')
+    .reduce((sum, tx) => sum + (tx.tax_collected || 0), 0)
+  const approvalRate = transactions.length > 0
+    ? (transactions.filter(tx => tx.status === 'APPROVED').length / transactions.length * 100)
+    : 0
+
+  // ========================================================================
+  // RENDER
+  // ========================================================================
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4" />
+          <p className="text-muted-foreground">Loading dashboard...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="min-h-screen bg-black text-green-500 font-mono p-6 md:p-10">
-      
-      {/* HEADER */}
-      <div className="border-b border-green-800 pb-4 mb-8 flex flex-col md:flex-row justify-between items-start md:items-center">
+    <div className="container mx-auto p-6 space-y-6">
+      {/* Header */}
+      <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold tracking-widest text-white">OVERSIGHT<span className="text-green-600">_PROTOCOL</span></h1>
-          <div className="text-xs text-gray-500 mt-1 uppercase tracking-widest">Institutional AI Banking Layer</div>
+          <h1 className="text-3xl font-bold">OVERSIGHT Dashboard</h1>
+          <p className="text-muted-foreground">AI Agent Payment Platform with Idempotency Protection</p>
         </div>
-        
-        {/* THE YELLOW BUTTON */}
-        <div className="text-right mt-4 md:mt-0 flex flex-col items-end gap-3">
-            <div className="text-xs border border-green-900 bg-green-900/20 px-3 py-1 text-green-400">SYSTEM: ONLINE</div>
-            
-            <button 
-                onClick={exportAudit}
-                className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded-sm tracking-widest shadow-[0_0_15px_rgba(234,179,8,0.5)] transition"
-            >
-                ⬇ DOWNLOAD CFO AUDIT
-            </button>
+        <div className="flex gap-2">
+          <Button onClick={loadData} variant="outline" size="sm">
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Refresh
+          </Button>
+          <Button onClick={exportAudit} variant="outline" size="sm">
+            <Download className="h-4 w-4 mr-2" />
+            Export Audit
+          </Button>
         </div>
       </div>
 
-      <Analytics />
+      {/* Alerts */}
+      {error && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-        {/* CONTROLS */}
-        <div className="md:col-span-4 border border-green-900 bg-gray-900/20 h-fit p-6">
-          {!currentOrg ? (
-            <div className="mb-8 border-b border-green-900/50 pb-8">
-                <div className="flex items-center gap-2 mb-4">
-                    <span className="bg-white text-black text-xs font-bold px-2 py-0.5">STEP 1</span>
-                    <h2 className="text-sm font-bold text-white tracking-widest">CORPORATE KYB</h2>
-                </div>
-                <div className="space-y-3">
-                    <input type="text" value={orgName} onChange={(e) => setOrgName(e.target.value)}
-                        className="w-full bg-black border border-green-800 p-3 text-sm focus:border-green-500 outline-none transition" placeholder="COMPANY NAME" />
-                    <input type="text" value={taxId} onChange={(e) => setTaxId(e.target.value)}
-                        className="w-full bg-black border border-green-800 p-3 text-sm focus:border-green-500 outline-none transition" placeholder="TAX ID / EIN" />
-                    <button onClick={registerCompany} className="w-full bg-white hover:bg-gray-200 text-black p-3 text-sm font-bold tracking-widest transition">
-                        VERIFY IDENTITY
-                    </button>
-                </div>
-            </div>
-          ) : (
-             <div className="mb-8 border-b border-green-900/50 pb-8 opacity-50 pointer-events-none">
-                <div className="flex items-center gap-2 mb-2">
-                    <span className="text-green-500">✓</span>
-                    <h2 className="text-sm font-bold text-green-300 tracking-widest">IDENTITY VERIFIED: {currentOrg.name}</h2>
-                </div>
-            </div>
-          )}
+      {success && (
+        <Alert className="bg-green-50 text-green-900 border-green-200">
+          <CheckCircle className="h-4 w-4" />
+          <AlertDescription>{success}</AlertDescription>
+        </Alert>
+      )}
 
-          <div className={!currentOrg ? "opacity-30 pointer-events-none" : ""}>
-            <div className="flex items-center gap-2 mb-4">
-                <span className="bg-green-900 text-white text-xs font-bold px-2 py-0.5">STEP 2</span>
-                <h2 className="text-sm font-bold text-white tracking-widest">DEPLOY NODE</h2>
-            </div>
-            <div className="space-y-3">
-                <input type="text" value={agentName} onChange={(e) => setAgentName(e.target.value)}
-                className="w-full bg-black border border-green-800 p-3 text-sm focus:border-green-500 outline-none" placeholder="AGENT DESIGNATION" />
-                <button onClick={createAgent} className="w-full bg-green-700 hover:bg-green-600 text-white p-3 text-sm font-bold tracking-widest transition">
-                INITIALIZE AGENT
-                </button>
-            </div>
-          </div>
-          
-          <div className="mt-6 border border-green-900/30 bg-black p-4 min-h-[60px]">
-            <p className="text-[10px] text-gray-500 mb-1">SYSTEM CONSOLE</p>
-            <div className="text-xs text-yellow-400 font-mono">
-              {status || "> Ready for command..."}
-            </div>
-          </div>
-        </div>
+      {/* Stats */}
+      <div className="grid gap-4 md:grid-cols-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Balance</CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${totalBalance.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground">Across {agents.length} agents</p>
+          </CardContent>
+        </Card>
 
-        {/* FLEET */}
-        <div className="md:col-span-8 border border-green-900 bg-gray-900/20 h-[600px] overflow-y-auto p-6">
-          <div className="flex justify-between items-center mb-6 border-b border-green-900/50 pb-2">
-             <h2 className="text-sm font-bold text-white tracking-widest">LIVE FLEET STATUS</h2>
-             <span className="text-xs text-green-500">{agents.length} NODES ACTIVE</span>
-          </div>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Daily Spent</CardTitle>
+            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${totalSpent.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground">Limit: $50.00/day</p>
+          </CardContent>
+        </Card>
 
-          <div className="space-y-3">
-            {agents.map((agent, i) => (
-              <div key={i} className="border border-green-800/50 bg-black/40 hover:bg-green-900/10 transition p-4 group">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <div>
-                        <span className="font-bold text-white block">{agent.name}</span>
-                        <span className="text-[10px] text-gray-500 uppercase tracking-wider">{agent.org} CORP</span>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Tax Collected</CardTitle>
+            <Shield className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${totalTax.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground">10% withholding rate</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Approval Rate</CardTitle>
+            <CheckCircle className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{approvalRate.toFixed(1)}%</div>
+            <p className="text-xs text-muted-foreground">{transactions.length} transactions</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Payment Form */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Process Payment</CardTitle>
+          <CardDescription>Send payment with automatic tax withholding (10%)</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handlePayment} className="space-y-4">
+            <div className="grid gap-4 md:grid-cols-3">
+              <div>
+                <label className="text-sm font-medium">Agent</label>
+                <select
+                  value={selectedAgent}
+                  onChange={(e) => setSelectedAgent(e.target.value)}
+                  className="w-full mt-1 p-2 border rounded-md"
+                  disabled={processing}
+                >
+                  <option value="">Select agent...</option>
+                  {agents.map(agent => (
+                    <option key={agent.id} value={agent.id}>
+                      {agent.name} (${(agent.balance || 0).toFixed(2)})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Amount ($)</label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  placeholder="0.00"
+                  disabled={processing}
+                  className="mt-1"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Vendor</label>
+                <Input
+                  type="text"
+                  value={vendor}
+                  onChange={(e) => setVendor(e.target.value)}
+                  placeholder="e.g., OpenAI"
+                  disabled={processing}
+                  className="mt-1"
+                />
+              </div>
+            </div>
+
+            <Button type="submit" disabled={processing} className="w-full">
+              {processing ? (
+                <>
+                  <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                'Process Payment'
+              )}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+
+      {/* Agents List */}
+      <Card>
+        <CardHeader>
+          <CardTitle>AI Agents</CardTitle>
+          <CardDescription>Manage your AI agent wallets</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {agents.length === 0 ? (
+              <p className="text-center text-muted-foreground py-8">
+                No agents found. Create your first agent to get started.
+              </p>
+            ) : (
+              agents.map(agent => (
+                <div key={agent.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex-1">
+                    <h3 className="font-semibold">{agent.name}</h3>
+                    <p className="text-sm text-muted-foreground">{agent.wallet_address}</p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <p className="text-sm font-medium">Balance: ${(agent.balance || 0).toFixed(2)}</p>
+                      <p className="text-xs text-muted-foreground">
+                        Spent today: ${(agent.daily_spent || 0).toFixed(2)} / $50.00
+                      </p>
                     </div>
-                  </div>
-                  <div className="text-right mt-2 md:mt-0">
-                    <div className="text-xs text-gray-500 mb-0.5">AVAILABLE LIQUIDITY</div>
-                    <span className="text-2xl font-mono font-bold text-white tracking-tighter">${agent.balance.toFixed(2)}</span>
+                    <Button onClick={() => handleDeposit(agent.id)} variant="outline" size="sm">
+                      Deposit
+                    </Button>
                   </div>
                 </div>
-                
-                <div className="bg-gray-900/50 p-2 rounded mb-4 flex items-center justify-between border border-white/5">
-                    <span className="text-[10px] text-gray-500 font-mono">WALLET_ID</span>
-                    <span className="text-[10px] text-green-300 font-mono">{agent.wallet}</span>
-                </div>
+              ))
+            )}
+          </div>
+        </CardContent>
+      </Card>
 
-                <div className="grid grid-cols-3 gap-2 opacity-50 group-hover:opacity-100 transition-opacity">
-                    <button onClick={() => deposit(agent.wallet)} className="bg-blue-900/30 hover:bg-blue-900 text-blue-200 text-[10px] py-2 border border-blue-900/50">+ DEPOSIT $100</button>
-                    <button onClick={() => spend(agent.wallet, 50)} className="bg-gray-800 hover:bg-gray-700 text-white text-[10px] py-2 border border-gray-700">- SPEND $50</button>
-                    <button onClick={() => spend(agent.wallet, 1000)} className="bg-red-900/20 hover:bg-red-900/50 text-red-200 text-[10px] py-2 border border-red-900/50">TEST ATTACK ($1k)</button>
+      {/* Charts */}
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Spending</CardTitle>
+            <CardDescription>Last 10 approved transactions</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {spendingData.length > 0 ? (
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={spendingData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="vendor" stroke="#8884d8" name="Vendor Paid" />
+                  <Line type="monotone" dataKey="tax" stroke="#82ca9d" name="Tax" />
+                </LineChart>
+              </ResponsiveContainer>
+            ) : (
+              <p className="text-center text-muted-foreground py-20">No transactions yet</p>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Tax Distribution</CardTitle>
+            <CardDescription>Vendor vs Tax breakdown</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {taxData[0].value > 0 || taxData[1].value > 0 ? (
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={taxData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={(entry) => `${entry.name}: $${entry.value.toFixed(2)}`}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {taxData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            ) : (
+              <p className="text-center text-muted-foreground py-20">No data yet</p>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Recent Transactions */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Recent Transactions</CardTitle>
+          <CardDescription>Last 10 transactions with idempotency tracking</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            {transactions.slice(0, 10).map(tx => (
+              <div key={tx.transaction_id} className="flex items-center justify-between p-3 border rounded-lg">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <Badge variant={tx.status === 'APPROVED' ? 'default' : 'destructive'}>
+                      {tx.status}
+                    </Badge>
+                    <span className="text-sm font-mono">{tx.transaction_id}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">{tx.detail}</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    🔑 Idempotency: {tx.idempotency_key.substring(0, 24)}...
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-medium">Vendor: ${(tx.vendor_paid || 0).toFixed(2)}</p>
+                  <p className="text-xs text-muted-foreground">Tax: ${(tx.tax_collected || 0).toFixed(2)}</p>
+                  <p className="text-xs text-muted-foreground">{new Date(tx.timestamp).toLocaleString()}</p>
                 </div>
               </div>
             ))}
+            {transactions.length === 0 && (
+              <p className="text-center text-muted-foreground py-8">No transactions yet</p>
+            )}
           </div>
-        </div>
-
-      </div>
+        </CardContent>
+      </Card>
     </div>
-  );
+  )
 }
