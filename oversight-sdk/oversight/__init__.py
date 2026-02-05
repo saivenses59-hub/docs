@@ -1,28 +1,19 @@
 """
 OVERSIGHT SDK - Python Client Library
-Simple SDK for OVERSIGHT payment processing
+Matches institutional backend contract exactly
 
-Usage:
-    >>> from oversight import OversightClient
-    >>> 
-    >>> client = OversightClient(api_key="ovr_test")
-    >>> response = client.pay(
-    ...     wallet_address="0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
-    ...     amount=100.00,
-    ...     vendor="OpenAI"
-    ... )
-    >>> 
-    >>> print(f"Status: {response.status}")
-    >>> print(f"Vendor paid: ${response.vendor_paid}")
+Endpoint: POST /process-payment
+Payload: {wallet_address, amount, vendor, idempotency_key}
 """
 
-__version__ = "1.0.0"
-__author__ = "OVERSIGHT Team"
+__version__ = "2.0.0"
 
 from .client import OversightClient
-from .types import PaymentResponse
+from .types import PaymentResponse, CreateAgentResponse, DepositResponse
 
 __all__ = [
     "OversightClient",
     "PaymentResponse",
+    "CreateAgentResponse",
+    "DepositResponse",
 ]

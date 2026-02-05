@@ -1,4 +1,4 @@
-﻿"""
+"""
 OVERSIGHT SDK - Final Test
 Tests SDK against institutional backend
 """

@@ -1,21 +1,23 @@
 """
-OVERSIGHT SDK - Client
-EXACT MATCH to institutional backend contract
+OVERSIGHT SDK - Client with Auto-Idempotency & Retry Logic
+Production-grade client with institutional safety features
 
-CRITICAL:
-- Endpoint: POST /process-payment (NOT /transactions)
-- Payload: {wallet_address, amount, vendor, idempotency_key}
-- Auto-generates idempotency keys
-- Safe retries with same key
+CRITICAL FEATURES:
+- Auto-generates idempotency keys (prevents double-spend)
+- Automatic retry with exponential backoff
+- Safe to retry (same key = same result)
+- Comprehensive error handling
 """
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from typing import Optional
 import logging
 import uuid
 import time
 
-from .types import PaymentResponse, CreateAgentResponse, DepositResponse
+from .types import PaymentResponse
 
 
 logger = logging.getLogger("oversight.client")
@@ -23,25 +25,26 @@ logger = logging.getLogger("oversight.client")
 
 class OversightClient:
     """
-    OVERSIGHT API Client - Matches Institutional Backend
+    OVERSIGHT API Client with institutional-grade safety
     
-    Backend Contract:
-    - Endpoint: POST /process-payment
-    - Required: wallet_address (0x...), amount, vendor, idempotency_key
-    - Response: status, new_balance, tax_collected, vendor_paid, detail, etc.
+    Features:
+    - ✅ Auto-generates idempotency keys
+    - ✅ Automatic retry with same key (safe)
+    - ✅ Exponential backoff (1s, 2s, 4s)
+    - ✅ Comprehensive error handling
     
     Example:
         >>> client = OversightClient(api_key="ovr_test")
         >>> 
+        >>> # Safe to call multiple times - idempotency prevents double charge
         >>> response = client.pay(
         ...     wallet_address="0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
         ...     amount=25.50,
         ...     vendor="OpenAI"
         ... )
         >>> 
+        >>> # Even if network fails, retry is safe
         >>> print(f"Status: {response.status}")
-        >>> print(f"Vendor paid: ${response.vendor_paid}")
-        >>> print(f"Tax: ${response.tax_collected}")
     """
     
     DEFAULT_BASE_URL = "https://oversight-protocol.onrender.com"
@@ -69,16 +72,33 @@ class OversightClient:
         self.timeout = timeout
         self.max_retries = max_retries
         
-        # Create session
-        self.session = requests.Session()
-        self.session.headers.update({
+        # Create session with retry strategy
+        self.session = self._create_session()
+        
+        logger.info(f"OVERSIGHT client initialized: {self.base_url}")
+    
+    def _create_session(self) -> requests.Session:
+        """
+        Create requests session with retry strategy
+        
+        Retry Strategy:
+        - Retries: 3 attempts
+        - Backoff: 1s, 2s, 4s (exponential)
+        - Retry on: 5xx errors, connection errors, timeouts
+        - Important: Uses SAME idempotency key on retry (safe!)
+        """
+        session = requests.Session()
+        
+        # Configure retry with exponential backoff
+        # Note: We handle retries manually to preserve idempotency keys
+        session.headers.update({
             "Content-Type": "application/json",
             "User-Agent": "oversight-sdk-python/2.0.0"
         })
         
-        logger.info(f"OVERSIGHT client initialized: {self.base_url}")
+        return session
     
-    def _retry_request(
+    def _retry_with_backoff(
         self,
         method: str,
         url: str,
@@ -88,7 +108,7 @@ class OversightClient:
         """
         Retry request with exponential backoff
         
-        CRITICAL: Uses SAME idempotency key on retry (safe!)
+        Critical: Uses SAME idempotency key on retry (prevents double-spend)
         
         Args:
             method: HTTP method
@@ -98,6 +118,9 @@ class OversightClient:
             
         Returns:
             Response object
+            
+        Raises:
+            requests.RequestException: If all retries fail
         """
         last_exception = None
         
@@ -113,22 +136,28 @@ class OversightClient:
                     timeout=self.timeout
                 )
                 
-                # Success (2xx or 4xx - don't retry client errors)
-                if response.status_code < 500:
+                # Success
+                if response.status_code < 400:
+                    return response
+                
+                # Client error (4xx) - don't retry
+                if 400 <= response.status_code < 500:
+                    logger.warning(f"Client error {response.status_code} - not retrying")
                     return response
                 
                 # Server error (5xx) - retry with backoff
-                wait_time = 2 ** attempt  # 1s, 2s, 4s
-                logger.warning(
-                    f"Server error {response.status_code} - "
-                    f"retrying in {wait_time}s (attempt {attempt + 1}/{self.max_retries})"
-                )
-                
-                if attempt < self.max_retries - 1:
-                    time.sleep(wait_time)
-                    continue
-                
-                return response
+                if response.status_code >= 500:
+                    wait_time = 2 ** attempt  # 1s, 2s, 4s
+                    logger.warning(
+                        f"Server error {response.status_code} - "
+                        f"retrying in {wait_time}s (attempt {attempt + 1}/{self.max_retries})"
+                    )
+                    
+                    if attempt < self.max_retries - 1:
+                        time.sleep(wait_time)
+                        continue
+                    
+                    return response
                 
             except (requests.ConnectionError, requests.Timeout) as e:
                 last_exception = e
@@ -136,7 +165,7 @@ class OversightClient:
                 
                 logger.warning(
                     f"Network error: {type(e).__name__} - "
-                    f"retrying in {wait_time}s"
+                    f"retrying in {wait_time}s (attempt {attempt + 1}/{self.max_retries})"
                 )
                 
                 if attempt < self.max_retries - 1:
@@ -145,6 +174,7 @@ class OversightClient:
                 
                 raise
         
+        # All retries failed
         if last_exception:
             raise last_exception
         
@@ -158,63 +188,62 @@ class OversightClient:
         idempotency_key: Optional[str] = None
     ) -> PaymentResponse:
         """
-        Process payment - MATCHES BACKEND CONTRACT EXACTLY
+        Process payment with automatic idempotency protection
         
-        Backend expects:
-        - Endpoint: POST /process-payment
-        - Payload: {wallet_address, amount, vendor, idempotency_key}
+        🔒 SAFETY GUARANTEE:
+        - Automatically generates unique idempotency key
+        - Safe to retry on network failures
+        - Same key = same result (no double charge)
         
         Args:
-            wallet_address: Blockchain wallet (42 chars, starts with 0x)
-            amount: Transaction amount (float)
+            wallet_address: Agent's blockchain wallet address
+            amount: Transaction amount
             vendor: Vendor/recipient name
-            idempotency_key: Optional key (auto-generated if not provided)
+            idempotency_key: Optional custom key (auto-generated if not provided)
             
         Returns:
-            PaymentResponse with exact backend fields:
-            - status, new_balance, tax_collected, vendor_paid, detail,
-              transaction_id, idempotency_key, timestamp
+            PaymentResponse with transaction details
             
         Raises:
             requests.HTTPError: If API returns error
-            requests.RequestException: If network error
+            requests.RequestException: If network error persists
             
         Example:
+            >>> # Simple payment
             >>> response = client.pay(
             ...     wallet_address="0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
             ...     amount=50.00,
             ...     vendor="OpenAI"
             ... )
             >>> 
-            >>> if response.status == "APPROVED":
-            ...     print(f"Vendor: ${response.vendor_paid}")
-            ...     print(f"Tax: ${response.tax_collected}")
-            ...     print(f"Balance: ${response.new_balance}")
+            >>> # Safe to retry - won't double charge
+            >>> if response.status == "DENIED":
+            ...     # Retry is safe
+            ...     response = client.pay(...)  # Auto-generates NEW key
+            >>> 
+            >>> # Or provide your own key for explicit control
+            >>> my_key = f"payment_{uuid.uuid4()}"
+            >>> response = client.pay(..., idempotency_key=my_key)
+            >>> # Can retry with same key - guaranteed same result
+            >>> response = client.pay(..., idempotency_key=my_key)
         """
         
-        # Validate wallet address format
-        if not wallet_address.startswith('0x') or len(wallet_address) != 42:
-            raise ValueError(
-                f"Invalid wallet address: {wallet_address}. "
-                f"Must be 42 characters starting with 0x"
-            )
-        
-        # Auto-generate idempotency key
+        # ====================================================================
+        # AUTO-GENERATE IDEMPOTENCY KEY (Critical for safety)
+        # ====================================================================
         if idempotency_key is None:
             idempotency_key = f"sdk_{uuid.uuid4()}"
             logger.info(f"🔑 Auto-generated idempotency key: {idempotency_key[:32]}...")
         
-        # Ensure amount is float
+        # Convert amount to float (ensure JSON serializable)
         amount = float(amount)
         
-        # ====================================================================
-        # CRITICAL: Exact payload matching backend contract
-        # ====================================================================
+        # Prepare request payload
         payload = {
-            "wallet_address": wallet_address.lower(),  # Backend normalizes to lowercase
+            "wallet_address": wallet_address,
             "amount": amount,
             "vendor": vendor,
-            "idempotency_key": idempotency_key
+            "idempotency_key": idempotency_key  # Critical: Include in payload
         }
         
         # Prepare headers
@@ -223,19 +252,17 @@ class OversightClient:
             "Authorization": f"Bearer {self.api_key}"
         }
         
-        # ====================================================================
-        # CRITICAL: Correct endpoint is /process-payment (NOT /transactions)
-        # ====================================================================
+        # Construct URL
         url = f"{self.base_url}/process-payment"
         
         logger.info(
-            f"💳 Payment: ${amount:.2f} to {vendor} "
+            f"💳 Payment request: ${amount:.2f} to {vendor} "
             f"(wallet: {wallet_address[:10]}...)"
         )
         
         try:
             # Make request with retry logic
-            response = self._retry_request(
+            response = self._retry_with_backoff(
                 method="POST",
                 url=url,
                 data=payload,
@@ -257,14 +284,7 @@ class OversightClient:
             return PaymentResponse(**data)
             
         except requests.exceptions.HTTPError as e:
-            # Try to get error details from response
-            try:
-                error_data = e.response.json()
-                error_msg = error_data.get('detail', e.response.text)
-            except:
-                error_msg = e.response.text
-            
-            logger.error(f"HTTP {e.response.status_code}: {error_msg}")
+            logger.error(f"HTTP error: {e.response.status_code} - {e.response.text}")
             raise
         
         except requests.exceptions.RequestException as e:
@@ -276,17 +296,17 @@ class OversightClient:
         name: str,
         wallet_address: str,
         initial_balance: float = 500.00
-    ) -> CreateAgentResponse:
+    ):
         """
         Create new agent
         
         Args:
             name: Agent name
-            wallet_address: Blockchain wallet (0x...)
+            wallet_address: Blockchain wallet address
             initial_balance: Starting balance (default: $500)
             
         Returns:
-            Agent details including API key (only shown once)
+            Agent details including API key
         """
         url = f"{self.base_url}/create-agent"
         
@@ -301,30 +321,22 @@ class OversightClient:
             "Authorization": f"Bearer {self.api_key}"
         }
         
-        response = self.session.post(
-            url,
-            json=payload,
-            headers=headers,
-            timeout=self.timeout
-        )
+        response = self.session.post(url, json=payload, headers=headers, timeout=self.timeout)
         response.raise_for_status()
         
-        data = response.json()
-        logger.info(f"🤖 Agent created: {data['agent_id']}")
-        
-        return CreateAgentResponse(**data)
+        return response.json()
     
     def deposit(
         self,
         wallet_address: str,
         amount: float,
         idempotency_key: Optional[str] = None
-    ) -> DepositResponse:
+    ):
         """
         Deposit funds to wallet (with idempotency)
         
         Args:
-            wallet_address: Wallet to deposit to (0x...)
+            wallet_address: Wallet to deposit to
             amount: Amount to deposit
             idempotency_key: Optional key (auto-generated if not provided)
             
@@ -348,41 +360,7 @@ class OversightClient:
             "Authorization": f"Bearer {self.api_key}"
         }
         
-        response = self._retry_request("POST", url, payload, headers)
-        response.raise_for_status()
-        
-        data = response.json()
-        logger.info(f"💵 Deposited ${amount}")
-        
-        return DepositResponse(**data)
-    
-    def get_agents(self):
-        """
-        Get all agents
-        
-        Returns:
-            List of agents with balances
-        """
-        url = f"{self.base_url}/agents"
-        
-        response = self.session.get(url, timeout=self.timeout)
-        response.raise_for_status()
-        
-        return response.json()
-    
-    def get_transactions(self, limit: int = 100):
-        """
-        Get transaction history
-        
-        Args:
-            limit: Maximum transactions to return
-            
-        Returns:
-            List of transactions
-        """
-        url = f"{self.base_url}/transactions?limit={limit}"
-        
-        response = self.session.get(url, timeout=self.timeout)
+        response = self._retry_with_backoff("POST", url, payload, headers)
         response.raise_for_status()
         
         return response.json()

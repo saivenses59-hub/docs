@@ -1,85 +1,586 @@
 ---
-pid: 28052
+pid: 16356
 cwd: |
-  C:\Users\adamr\.cursor
+  C:\Users\adamr\.cursor\oversight-sdk
+last_command: python golden_thread.py
+last_exit_code: 0
 ---
+PS C:\Users\adamr\.cursor> python golden_thread.py
+Traceback (most recent call last):
+  File "C:\Users\adamr\.cursor\golden_thread.py", line 3, in <module>
+    from oversight_sdk import Oversight
+ModuleNotFoundError: No module named 'oversight_sdk'
 PS C:\Users\adamr\.cursor> ^C
-PS C:\Users\adamr\.cursor> python untitled-2
-C:\Python314\python.exe: can't open file 'C:\\Users\\adamr\\.cursor\\untitled-2': [Errno 2] No such file or directory
-PS C:\Users\adamr\.cursor> ^C
-PS C:\Users\adamr\.cursor> python rogue_bot.py
-🤖 INITIALIZING ROGUE BOT SIMULATION...
+PS C:\Users\adamr\.cursor> cd ..
+>> ls
 
-[STEP 1] Creating Identity...
-----------------------------------------
-✅ Created Agent: ROGUE_AI_BOT
-💳 Wallet Issued: 0x427a3ffa020801640ff48f20fb11a39df001daaa
 
-[STEP 2] Hacking... I mean, Receiving Funds...      
-----------------------------------------
-💰 Received Deposit: $500.00
+    Répertoire : C:\Users\adamr
 
-[STEP 3] ATTEMPTING TO BUY A LAMBORGHINI ($600)...  
-----------------------------------------
-🛡️ BLOCKED BY OVERSIGHT PROTOCOL!
-REASON: OVER LIMIT (Max: $50.0)
 
-[STEP 4] Fine... Attempting to buy Coffee ($5)...   
-----------------------------------------
-✅ APPROVED. New Balance: $495.0
+Mode                 LastWriteTime         Length N 
+                                                  a 
+                                                  m 
+                                                  e 
+----                 -------------         ------ - 
+d-----          2/5/2026  12:25 PM                . 
+                                                  c 
+                                                  u 
+                                                  r 
+                                                  s 
+                                                  o 
+                                                  r 
+d-----          2/1/2026   9:43 PM                . 
+                                                  v 
+                                                  s 
+                                                  c 
+                                                  o 
+                                                  d 
+                                                  e 
+d-r---          1/4/2026   8:00 PM                C 
+                                                  o 
+                                                  n 
+                                                  t 
+                                                  a 
+                                                  c 
+                                                  t 
+                                                  s 
+d-r---          2/3/2026   9:31 PM                D
+                                                  e 
+                                                  s 
+                                                  k 
+                                                  t 
+                                                  o 
+                                                  p 
+d-r---          1/4/2026   8:00 PM                D 
+                                                  o 
+                                                  c 
+                                                  u 
+                                                  m 
+                                                  e 
+                                                  n 
+                                                  t 
+                                                  s 
+d-r---          2/5/2026   1:54 PM                D 
+                                                  o 
+                                                  w 
+                                                  n 
+                                                  l 
+                                                  o 
+                                                  a 
+                                                  d 
+                                                  s 
+d-r---          1/4/2026   8:00 PM                F 
+                                                  a 
+                                                  v 
+                                                  o 
+                                                  r 
+                                                  i 
+                                                  t 
+                                                  e 
+                                                  s 
+d-r---          1/4/2026   8:00 PM                L 
+                                                  i 
+                                                  n 
+                                                  k 
+                                                  s 
+d-r---          1/4/2026   8:00 PM                M 
+                                                  u 
+                                                  s 
+                                                  i 
+                                                  c 
+dar--l          2/5/2026  10:13 AM                O 
+                                                  n 
+                                                  e 
+                                                  D 
+                                                  r 
+                                                  i 
+                                                  v
+                                                  e 
+d-r---          1/4/2026   8:00 PM                P 
+                                                  i 
+                                                  c 
+                                                  t 
+                                                  u 
+                                                  r 
+                                                  e 
+                                                  s 
+d-r---          1/4/2026   8:00 PM                S 
+                                                  a 
+                                                  v 
+                                                  e 
+                                                  d 
 
-🏁 SIMULATION COMPLETE.
-PS C:\Users\adamr\.cursor> ^C
-PS C:\Users\adamr\.cursor> rogue_bot.py 
-rogue_bot.py : Le terme «rogue_bot.py» n'est pas 
-reconnu comme nom d'applet de commande, fonction,   
-fichier de script ou programme exécutable.
-Vérifiez l'orthographe du nom, ou si un chemin      
-d'accès existe, vérifiez que le chemin d'accès est  
-correct et réessayez.
+                                                  G 
+                                                  a 
+                                                  m 
+                                                  e 
+                                                  s 
+d-r---         1/22/2026   1:04 PM                S 
+                                                  e 
+                                                  a 
+                                                  r 
+                                                  c 
+                                                  h 
+                                                  e 
+                                                  s 
+d-r---         1/30/2026   1:08 AM                V 
+                                                  i 
+                                                  d 
+                                                  e 
+                                                  o 
+                                                  s 
+-a----          2/2/2026  11:46 AM             58 .
+                                                  g 
+                                                  i 
+                                                  t 
+                                                  c 
+                                                  o 
+                                                  n 
+                                                  f 
+                                                  i 
+                                                  g 
+
+
+PS C:\Users\adamr> cd oversight-protocol
+>>
+cd : Impossible de trouver le chemin d'accès «
+C:\Users\adamr\oversight-protocol», car il
+n'existe pas.
 Au caractère Ligne:1 : 1
-+ rogue_bot.py
-+ ~~~~~~~~~~~~
-    + CategoryInfo          : ObjectNotFound: (rog  
-   ue_bot.py:String) [], CommandNotFoundException   
-    + FullyQualifiedErrorId : CommandNotFoundExcep  
-   tion
++ cd oversight-protocol
++ ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\  
+   Users\adamr\oversight-protocol:String) [Set-Lo   
+  cation], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microso  
+   ft.PowerShell.Commands.SetLocationCommand        
+
+PS C:\Users\adamr> cd oversight-backend
+cd : Impossible de trouver le chemin d'accès «
+C:\Users\adamr\oversight-backend», car il n'existe  
+pas.
+Au caractère Ligne:1 : 1
++ cd oversight-backend
++ ~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\  
+   Users\adamr\oversight-backend:String) [Set-Loc   
+  ation], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microso  
+   ft.PowerShell.Commands.SetLocationCommand        
+
+PS C:\Users\adamr> cd oversight-backend
+cd : Impossible de trouver le chemin d'accès «
+C:\Users\adamr\oversight-backend», car il n'existe  
+pas.
+Au caractère Ligne:1 : 1
++ cd oversight-backend
++ ~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\  
+   Users\adamr\oversight-backend:String) [Set-Loc   
+  ation], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microso  
+   ft.PowerShell.Commands.SetLocationCommand        
+
+PS C:\Users\adamr> ^C
+PS C:\Users\adamr> python -m uvicorn main:app --reload
+INFO:     Will watch for changes in these directories: ['C:\\Users\\adamr']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [3436] using StatReload
+ERROR:    Error loading ASGI app. Could not import module "main".
+INFO:     Stopping reloader process [3436]
+PS C:\Users\adamr> cd oversight-backend
+cd : Impossible de trouver le chemin d'accès «
+C:\Users\adamr\oversight-backend», car il n'existe  
+pas.
+Au caractère Ligne:1 : 1
++ cd oversight-backend
++ ~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\  
+   Users\adamr\oversight-backend:String) [Set-Loc   
+  ation], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microso  
+   ft.PowerShell.Commands.SetLocationCommand        
+
+PS C:\Users\adamr> cd .cursor
+>> ls
 
 
-Suggestion [3,General]: La commande rogue_bot.py est introuvable, mais elle existe à l''emplacement actuel. Par défaut, Windows PowerShell ne charge aucune commande à partir de l''emplacement actuel. Si vous approuvez cette commande, tapez « .\rogue_bot.py » à la place. Pour en savoir plus, voir "get-help about_Command_Precedence".
-PS C:\Users\adamr\.cursor> ^C
-PS C:\Users\adamr\.cursor> python rogue_bot.py
-🤖 INITIALIZING ROGUE BOT SIMULATION...
+    Répertoire : C:\Users\adamr\.cursor
 
-[STEP 1] Creating Identity...
-----------------------------------------
-✅ Created Agent: ROGUE_AI_BOT
-💳 Wallet Issued: 0x6a7b910b24a7ac0a108358483d6462a153e7eff1
 
-[STEP 2] Hacking... I mean, Receiving Funds...      
-----------------------------------------
-💰 Received Deposit: $500.00
+Mode                 LastWriteTime         Length N 
+                                                  a 
+                                                  m 
+                                                  e 
+----                 -------------         ------ - 
+d-----          2/1/2026   9:46 PM                . 
+                                                  v 
+                                                  s 
+                                                  c 
+                                                  o 
+                                                  d 
+                                                  e 
+d-----          2/5/2026   2:00 PM                a
+                                                  i 
+                                                  - 
+                                                  t 
+                                                  r 
+                                                  a 
+                                                  c 
+                                                  k 
+                                                  i 
+                                                  n 
+                                                  g 
+d-----          2/1/2026   4:12 PM                e 
+                                                  x 
+                                                  t 
+                                                  e 
+                                                  n 
+                                                  s 
+                                                  i 
+                                                  o 
+                                                  n 
+                                                  s 
+d-----          2/3/2026   5:25 PM                o
+                                                  v 
+                                                  e 
+                                                  r 
+                                                  s
+                                                  i 
+                                                  g 
+                                                  h 
+                                                  t 
+                                                  - 
+                                                  b 
+                                                  a 
+                                                  c 
+                                                  k 
+                                                  e 
+                                                  n 
+                                                  d 
+d-----          2/5/2026  11:07 AM                o 
+                                                  v 
+                                                  e 
+                                                  r 
+                                                  s 
+                                                  i 
+                                                  g 
+                                                  h 
+                                                  t 
+                                                  - 
+                                                  f 
+                                                  r 
+                                                  o 
+                                                  n 
+                                                  t 
+                                                  e 
+                                                  n 
+                                                  d 
+d-----          2/5/2026  12:53 PM                o
+                                                  v 
+                                                  e 
+                                                  r 
+                                                  s 
+                                                  i 
+                                                  g 
+                                                  h 
+                                                  t 
+                                                  - 
+                                                  s 
+                                                  d 
+                                                  k 
+d-----          2/1/2026   4:15 PM                p 
+                                                  r 
+                                                  o 
+                                                  j 
+                                                  e 
+                                                  c 
+                                                  t 
+                                                  s 
+d-----          2/1/2026   4:12 PM                s
+                                                  k 
+                                                  i 
+                                                  l 
+                                                  l 
+                                                  s 
+                                                  - 
+                                                  c 
+                                                  u 
+                                                  r 
+                                                  s 
+                                                  o 
+                                                  r 
+-a----          2/1/2026   4:12 PM            798 a 
+                                                  r
+                                                  g 
+                                                  v 
+                                                  . 
+                                                  j 
+                                                  s 
+                                                  o 
+                                                  n 
+-a----          2/5/2026   1:50 PM           1204 i 
+                                                  d 
+                                                  e 
+                                                  _ 
+                                                  s 
+                                                  t 
+                                                  a 
+                                                  t 
+                                                  e 
+                                                  . 
+                                                  j 
+                                                  s 
+                                                  o 
+                                                  n 
+-a----          2/5/2026  12:22 PM              0 r 
+                                                  e 
+                                                  q 
+                                                  u 
+                                                  i 
+                                                  r 
+                                                  e 
+                                                  m 
+                                                  e 
+                                                  n 
+                                                  t 
+                                                  s 
+                                                  . 
+                                                  t 
+                                                  x 
+                                                  t 
+-a----          2/2/2026  10:49 AM           2021 r 
+                                                  o 
+                                                  g
+                                                  u 
+                                                  e 
+                                                  _ 
+                                                  b 
+                                                  o 
+                                                  t 
+                                                  . 
+                                                  p 
+                                                  y 
+-a----          2/2/2026   9:43 AM           1672 s 
+                                                  e 
+                                                  n 
+                                                  t 
+                                                  e 
+                                                  n 
+                                                  c 
+                                                  e 
+                                                  _ 
+                                                  a 
+                                                  n 
+                                                  a 
+                                                  l 
+                                                  y 
+                                                  z 
+                                                  e 
+                                                  r 
+                                                  . 
+                                                  p 
+                                                  y 
 
-[STEP 3] ATTEMPTING TO BUY A LAMBORGHINI ($600)...  
-----------------------------------------
-🛡️ BLOCKED BY OVERSIGHT PROTOCOL!
-REASON: OVER LIMIT (Max: $50.0)
 
-[STEP 4] Fine... Attempting to buy Coffee ($5)...   
-----------------------------------------
-✅ APPROVED. New Balance: $495.0
+PS C:\Users\adamr\.cursor> cd oversight-backend
+PS C:\Users\adamr\.cursor\oversight-backend> ls 
 
-🏁 SIMULATION COMPLETE.
-PS C:\Users\adamr\.cursor> 
- *  History restored 
 
-PS C:\Users\adamr\.cursor> 
- *  History restored 
+    Répertoire:
+    C:\Users\adamr\.cursor\oversight-backend        
 
-PS C:\Users\adamr\.cursor> 
- *  History restored 
 
-PS C:\Users\adamr\.cursor> 
- *  History restored 
+Mode                 LastWriteTime         Length N
+                                                  a 
+                                                  m 
+                                                  e 
+----                 -------------         ------ - 
+d-----          2/3/2026   4:25 PM                l 
+                                                  o 
+                                                  g 
+                                                  s 
+d-----          2/5/2026   1:41 PM                _ 
+                                                  _ 
+                                                  p 
+                                                  y 
+                                                  c 
+                                                  a 
+                                                  c 
+                                                  h 
+                                                  e 
+                                                  _ 
+                                                  _ 
+-a----          2/3/2026   3:42 PM            343 . 
+                                                  e 
+                                                  n 
+                                                  v 
+-a----          2/5/2026   1:32 PM          18036 m 
+                                                  a 
+                                                  i 
+                                                  n 
+                                                  . 
+                                                  p 
+                                                  y 
+-a----          2/2/2026  11:50 AM             70 r
+                                                  e 
+                                                  q 
+                                                  u 
+                                                  i 
+                                                  r 
+                                                  e 
+                                                  m 
+                                                  e 
+                                                  n 
+                                                  t 
+                                                  s 
+                                                  . 
+                                                  t 
+                                                  x 
+                                                  t 
 
-PS C:\Users\adamr\.cursor>
+
+PS C:\Users\adamr\.cursor\oversight-backend> ls 
+
+
+    Répertoire:
+    C:\Users\adamr\.cursor\oversight-backend        
+
+
+Mode                 LastWriteTime         Length N 
+                                                  a 
+                                                  m 
+                                                  e 
+----                 -------------         ------ - 
+d-----          2/3/2026   4:25 PM                l
+                                                  o 
+                                                  g 
+                                                  s 
+d-----          2/5/2026   1:41 PM                _ 
+                                                  _ 
+                                                  p 
+                                                  y 
+                                                  c 
+                                                  a 
+                                                  c 
+                                                  h 
+                                                  e 
+                                                  _ 
+                                                  _ 
+-a----          2/3/2026   3:42 PM            343 . 
+                                                  e 
+                                                  n 
+                                                  v 
+-a----          2/5/2026   1:32 PM          18036 m 
+                                                  a 
+                                                  i 
+                                                  n 
+                                                  . 
+                                                  p 
+                                                  y 
+-a----          2/2/2026  11:50 AM             70 r 
+                                                  e 
+                                                  q 
+                                                  u 
+                                                  i 
+                                                  r 
+                                                  e 
+                                                  m 
+                                                  e 
+                                                  n 
+                                                  t 
+                                                  s 
+                                                  . 
+                                                  t 
+                                                  x 
+                                                  t 
+
+
+PS C:\Users\adamr\.cursor\oversight-backend> git add
+ .
+>>
+PS C:\Users\adamr\.cursor\oversight-backend> git commit -m "Deploy: Live Network Update"
+>>
+[main 6385608] Deploy: Live Network Update
+ 4 files changed, 603 insertions(+), 179 deletions(-)
+ create mode 100644 oversight-backend/logs/oversight_20260203.log
+PS C:\Users\adamr\.cursor\oversight-backend> git push origin main
+>>
+Enumerating objects: 15, done.
+Counting objects: 100% (15/15), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (9/9), 15.04 KiB | 3.76 MiB/s, done.
+Total 9 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/saivenses59-hub/oversight-protocol..git
+   08266d3..6385608  main -> main
+PS C:\Users\adamr\.cursor\oversight-backend> cd ../oversight-sdk
+>>
+PS C:\Users\adamr\.cursor\oversight-sdk> python golden_thread.py
+>>
+======================================================================
+OVERSIGHT SDK - Institutional Backend Test
+======================================================================
+
+✅ Client initialized: http://127.0.0.1:8000        
+📍 Test wallet: 0x742d35cc6634c0532925a3b844bc9e7595f0beb0
+   Length: 42 characters ✅
+
+======================================================================
+TEST 1: Payment Processing
+======================================================================
+
+🎯 Status: DENIED
+❌ Payment DENIED
+📝 Reason: Daily limit exceeded. Limit: $50.00, Spent: $40.0, Remaining: $10.00
+
+======================================================================
+✅ TEST 1 PASSED
+======================================================================
+
+======================================================================
+TEST 2: Idempotency Protection
+======================================================================
+
+1st Request: DENIED - TX: tx_f4f9de9e0dfb440a       
+   Balance: $560.00
+2nd Request: DENIED - TX: tx_f4f9de9e0dfb440a       
+   Balance: $560.00
+
+✅ Idempotency works! Same TX ID returned
+   Balance unchanged: $560.00
+   ✅ Balance correctly NOT deducted twice!
+
+======================================================================
+✅ TEST 2 PASSED
+======================================================================
+
+======================================================================
+TEST 3: Deposit Funds
+======================================================================
+
+💵 Deposit: SUCCESS
+   Amount: $100.00
+   New Balance: $660.00
+   TX ID: tx_82df6ddf4eb04785
+
+======================================================================
+✅ TEST 3 PASSED
+======================================================================
+
+======================================================================
+TEST 4: List Agents
+======================================================================
+
+📋 Total Agents: 0
+
+======================================================================
+✅ TEST 4 PASSED
+======================================================================
+
+======================================================================
+🎉 ALL TESTS COMPLETED
+======================================================================
+PS C:\Users\adamr\.cursor\oversight-sdk>

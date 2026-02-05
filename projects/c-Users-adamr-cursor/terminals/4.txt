@@ -1,74 +1,754 @@
 ---
-pid: 16468
+pid: 8516
 cwd: |
   C:\Users\adamr\.cursor
+active_command: |
+  git add .
+  git add .
+last_command: git remote -v
+last_exit_code: 0
 ---
-terminals/3.txt
- create mode 100644 projects/c-Users-adamr-cursor/terminals/4.txt
- create mode 100644 requirements.txt
- create mode 100644 rogue_bot.py
- create mode 100644 sentence_analyzer.py
- create mode 100644 skills-cursor/create-rule/SKILL.md
- create mode 100644 skills-cursor/create-skill/SKILL.md
- create mode 100644 skills-cursor/create-subagent/SKILL.md
- create mode 100644 skills-cursor/migrate-to-skills/SKILL.md
- create mode 100644 skills-cursor/update-cursor-settings/SKILL.md
-PS C:\Users\adamr\.cursor> git init
+          </Button>
+          <Button onClick={exportAudit} variant="outline" size="sm">
+            <Download className="h-4 w-4 mr-2" />   
+            Export Audit
+          </Button>
+        </div>
+      </div>
+
+      {/* Alerts */}
+      {error && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
+      {success && (
+        <Alert className="bg-green-50 text-green-900 border-green-200">
+          <CheckCircle className="h-4 w-4" />       
+          <AlertDescription>{success}</AlertDescription>
+        </Alert>
+      )}
+
+      {/* Stats */}
+      <div className="grid gap-4 md:grid-cols-4">   
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Balance</CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${totalBalance.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground">Across {agents.length} agents</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Daily Spent</CardTitle>
+            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${totalSpent.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground">Limit: $50.00/day</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Tax Collected</CardTitle>
+            <Shield className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${totalTax.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground">10% withholding rate</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Approval Rate</CardTitle>
+            <CheckCircle className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{approvalRate.toFixed(1)}%</div>
+            <p className="text-xs text-muted-foreground">{transactions.length} transactions</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Payment Form */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Process Payment</CardTitle>    
+          <CardDescription>Send payment with automatic tax withholding (10%)</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handlePayment} className="space-y-4">
+            <div className="grid gap-4 md:grid-cols-3">
+              <div>
+                <label className="text-sm font-medium">Agent</label>
+                <select
+                  value={selectedAgent}
+                  onChange={(e) => setSelectedAgent(e.target.value)}
+                  className="w-full mt-1 p-2 border rounded-md"
+                  disabled={processing}
+                >
+                  <option value="">Select agent...</option>
+                  {agents.map(agent => (
+                    <option key={agent.id} value={agent.id}>
+                      {agent.name} (${(agent.balance || 0).toFixed(2)})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Amount ($)</label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  placeholder="0.00"
+                  disabled={processing}
+                  className="mt-1"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Vendor</label>
+                <Input
+                  type="text"
+                  value={vendor}
+                  onChange={(e) => setVendor(e.target.value)}
+                  placeholder="e.g., OpenAI"        
+                  disabled={processing}
+                  className="mt-1"
+                />
+              </div>
+            </div>
+
+            <Button type="submit" disabled={processing} className="w-full">
+              {processing ? (
+                <>
+                  <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                'Process Payment'
+              )}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+
+      {/* Agents List */}
+      <Card>
+        <CardHeader>
+          <CardTitle>AI Agents</CardTitle>
+          <CardDescription>Manage your AI agent wallets</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {agents.length === 0 ? (
+              <p className="text-center text-muted-foreground py-8">
+                No agents found. Create your first agent to get started.
+              </p>
+            ) : (
+              agents.map(agent => (
+                <div key={agent.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex-1">
+                    <h3 className="font-semibold">{agent.name}</h3>
+                    <p className="text-sm text-muted-foreground">{agent.wallet_address}</p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">    
+                      <p className="text-sm font-medium">Balance: ${(agent.balance || 0).toFixed(2)}</p>
+                      <p className="text-xs text-muted-foreground">
+                        Spent today: ${(agent.daily_spent || 0).toFixed(2)} / $50.00
+                      </p>
+                    </div>
+                    <Button onClick={() => handleDeposit(agent.id)} variant="outline" size="sm">        
+                      Deposit
+                    </Button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Charts */}
+      <div className="grid gap-4 md:grid-cols-2">   
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Spending</CardTitle>  
+            <CardDescription>Last 10 approved transactions</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {spendingData.length > 0 ? (
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={spendingData}>     
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="vendor" stroke="#8884d8" name="Vendor Paid" />
+                  <Line type="monotone" dataKey="tax" stroke="#82ca9d" name="Tax" />
+                </LineChart>
+              </ResponsiveContainer>
+            ) : (
+              <p className="text-center text-muted-foreground py-20">No transactions yet</p>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Tax Distribution</CardTitle> 
+            <CardDescription>Vendor vs Tax breakdown</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {taxData[0].value > 0 || taxData[1].value > 0 ? (
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={taxData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={(entry) => `${entry.name}: $${entry.value.toFixed(2)}`}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {taxData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            ) : (
+              <p className="text-center text-muted-foreground py-20">No data yet</p>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Recent Transactions */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Recent Transactions</CardTitle>
+          <CardDescription>Last 10 transactions with idempotency tracking</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            {transactions.slice(0, 10).map(tx => (  
+              <div key={tx.transaction_id} className="flex items-center justify-between p-3 border rounded-lg">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <Badge variant={tx.status === 'APPROVED' ? 'default' : 'destructive'}>
+                      {tx.status}
+                    </Badge>
+                    <span className="text-sm font-mono">{tx.transaction_id}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">{tx.detail}</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    ðŸ”‘ Idempotency: {tx.idempotency_key.substring(0, 24)}...
+                  </p>
+                </div>
+                <div className="text-right">        
+                  <p className="text-sm font-medium">Vendor: ${(tx.vendor_paid || 0).toFixed(2)}</p>    
+                  <p className="text-xs text-muted-foreground">Tax: ${(tx.tax_collected || 0).toFixed(2)}</p>
+                  <p className="text-xs text-muted-foreground">{new Date(tx.timestamp).toLocaleString()}</p>
+                </div>
+              </div>
+            ))}
+            {transactions.length === 0 && (
+              <p className="text-center text-muted-foreground py-8">No transactions yet</p>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
+PS C:\Users\adamr\.cursor\oversight-frontend> app/dashboard/page.tsx
+PS C:\Users\adamr\.cursor\oversight-frontend> git add .
+>>
+PS C:\Users\adamr\.cursor\oversight-frontend> git commit -m "Deploy: Force Vercel Rebuild"
+>>
+[main 1d335a5] Deploy: Force Vercel Rebuild
+ 1 file changed, 1 insertion(+)
+PS C:\Users\adamr\.cursor\oversight-frontend> git push origin main
+>>
+Enumerating objects: 11, done.
+Counting objects: 100% (11/11), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 556 bytes | 556.00 KiB/s, done.
+Total 6 (delta 4), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To https://github.com/saivenses59-hub/oversight-protocol..git
+   70f4cd4..1d335a5  main -> main
+PS C:\Users\adamr\.cursor\oversight-frontend> Test-Path app/dashboard/page.tsx
+>>
+True
+PS C:\Users\adamr\.cursor\oversight-frontend> git add app/dashboard/page.tsx
+>>
+PS C:\Users\adamr\.cursor\oversight-frontend> git commit -m "Fix: Force add Dashboard Route"
+>>
+On branch main
+Your branch is up to date with 'origin/main'.       
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+  (commit or discard the untracked or modified content in submodules)
+        modified:   ../ai-tracking/ai-code-tracking.db
+        modified:   ../ide_state.json
+        deleted:    ../oversight-sdk/dist/oversight_sdk-1.0.1-py3-none-any.whl
+        deleted:    ../oversight-sdk/dist/oversight_sdk-1.0.1.tar.gz
+        modified:   ../oversight-sdk/docs (untracked content)
+        modified:   ../oversight-sdk/final_test.py  
+        modified:   ../oversight-sdk/oversight/__init__.py
+        modified:   ../oversight-sdk/oversight/__pycache__/__init__.cpython-314.pyc
+        modified:   ../oversight-sdk/oversight/__pycache__/client.cpython-314.pyc
+        modified:   ../oversight-sdk/oversight/__pycache__/types.cpython-314.pyc
+        modified:   ../oversight-sdk/oversight/client.py
+        modified:   ../oversight-sdk/oversight/types.py
+        modified:   ../oversight-sdk/oversight_sdk.egg-info/PKG-INFO
+        modified:   ../oversight-sdk/oversight_sdk.egg-info/requires.txt
+        modified:   ../oversight-sdk/setup.py       
+        modified:   ../projects/c-Users-adamr-cursor/terminals/1.txt
+        modified:   ../projects/c-Users-adamr-cursor/terminals/2.txt
+        modified:   ../projects/c-Users-adamr-cursor/terminals/3.txt
+        modified:   ../projects/c-Users-adamr-cursor/terminals/4.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        ../oversight-sdk/build/
+        ../oversight-sdk/dist/oversight_sdk-1.0.2-py3-none-any.whl
+        ../oversight-sdk/dist/oversight_sdk-1.0.2.tar.gz
+        ../oversight-sdk/golden_thread.py
+        ../projects/c-Users-adamr-cursor/agent-transcripts/6f3b58e3-4947-49e0-b99a-578a7316d2b5.txt     
+
+no changes added to commit (use "git add" and/or "git commit -a")
+PS C:\Users\adamr\.cursor\oversight-frontend> ls app/dashboard
+>>
+
+
+    Répertoire: C:\Users\adamr\.cursor\oversight-fr 
+    ontend\app\dashboard
+
+
+Mode                 LastWriteTime         Length N 
+                                                  a 
+                                                  m 
+                                                  e 
+----                 -------------         ------ - 
+-a----          2/3/2026  11:21 AM           3860 A 
+                                                  n 
+                                                  a 
+                                                  l 
+                                                  y 
+                                                  t 
+                                                  i 
+                                                  c 
+                                                  s 
+                                                  . 
+                                                  t 
+                                                  s 
+                                                  x 
+-a----          2/5/2026   3:04 PM          22817 p 
+                                                  a 
+                                                  g 
+                                                  e 
+                                                  . 
+                                                  t 
+                                                  s 
+                                                  x 
+
+
+PS C:\Users\adamr\.cursor\oversight-frontend> ^C
+PS C:\Users\adamr\.cursor\oversight-frontend> # Delete cache folders
+PS C:\Users\adamr\.cursor\oversight-frontend> rmdir /s /q .next
+Remove-Item : Impossible de trouver un paramètre 
+positionnel acceptant l'argument «/q».
+Au caractère Ligne:1 : 1
++ rmdir /s /q .next
++ ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument : (:  
+   ) [Remove-Item], ParameterBindingException       
+    + FullyQualifiedErrorId : PositionalParameterN  
+   otFound,Microsoft.PowerShell.Commands.RemoveIt   
+  emCommand
+
+PS C:\Users\adamr\.cursor\oversight-frontend> rmdir /s /q node_modules\.cache
+Remove-Item : Impossible de trouver un paramètre 
+positionnel acceptant l'argument «/q».
+Au caractère Ligne:1 : 1
++ rmdir /s /q node_modules\.cache
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument : (:  
+   ) [Remove-Item], ParameterBindingException       
+    + FullyQualifiedErrorId : PositionalParameterN  
+   otFound,Microsoft.PowerShell.Commands.RemoveIt   
+  emCommand
+
+PS C:\Users\adamr\.cursor\oversight-frontend> npm run dev
+>>
+
+> oversight-frontend@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.43.112:3000
+
+✓ Starting...
+✓ Ready in 2.1s
+ GET / 200 in 1709ms (compile: 1256ms, render: 453ms)
+PS C:\Users\adamr\.cursor\oversight-frontend> 
+                                              git init
+>>
+Initialized empty Git repository in C:/Users/adamr/.cursor/oversight-frontend/.git/
+PS C:\Users\adamr\.cursor\oversight-frontend> git add .
+>>
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it  
+warning: in the working copy of 'app/globals.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/layout.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'components.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'components/ui/alert.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'components/ui/badge.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'components/ui/button.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'components/ui/card.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'components/ui/input.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'eslint.config.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'lib/utils.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'next.config.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'postcss.config.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tsconfig.json', LF will be replaced by CRLF the next time Git touches it
+PS C:\Users\adamr\.cursor\oversight-frontend> git commit -m "Update dashboard with idempotency and new UI"
+>>
+[master (root-commit) f40241d] Update dashboard with idempotency and new UI
+ 25 files changed, 9968 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 app/dashboard/Analytics.tsx     
+ create mode 100644 app/dashboard/page.tsx
+ create mode 100644 app/favicon.ico
+ create mode 100644 app/globals.css
+ create mode 100644 app/layout.tsx
+ create mode 100644 app/page.tsx
+ create mode 100644 components.json
+ create mode 100644 components/ui/alert.tsx
+ create mode 100644 components/ui/badge.tsx
+ create mode 100644 components/ui/button.tsx        
+ create mode 100644 components/ui/card.tsx
+ create mode 100644 components/ui/input.tsx
+ create mode 100644 eslint.config.mjs
+ create mode 100644 lib/utils.ts
+ create mode 100644 next.config.ts
+ create mode 100644 package-lock.json
+ create mode 100644 package.json
+ create mode 100644 postcss.config.mjs
+ create mode 100644 public/file.svg
+ create mode 100644 public/globe.svg
+ create mode 100644 public/next.svg
+ create mode 100644 public/vercel.svg
+ create mode 100644 public/window.svg
+ create mode 100644 tsconfig.json
+PS C:\Users\adamr\.cursor\oversight-frontend> git push origin main
+>>
+error: src refspec main does not match any
+error: failed to push some refs to 'origin'
+PS C:\Users\adamr\.cursor\oversight-frontend> git status
+>>
+On branch master
+nothing to commit, working tree clean
+PS C:\Users\adamr\.cursor\oversight-frontend> git init
+>>
+Reinitialized existing Git repository in C:/Users/adamr/.cursor/oversight-frontend/.git/
+PS C:\Users\adamr\.cursor\oversight-frontend> git branch
+>>
+* master
+PS C:\Users\adamr\.cursor\oversight-frontend> git add .
+>>
+PS C:\Users\adamr\.cursor\oversight-frontend> git commit -m "Update OVERSIGHT dashboard with idempotency"
+>>
+On branch master
+nothing to commit, working tree clean
+PS C:\Users\adamr\.cursor\oversight-frontend> git branch
+>>
+* master
+PS C:\Users\adamr\.cursor\oversight-frontend> git branch -M main
+>>
+PS C:\Users\adamr\.cursor\oversight-frontend> git remote -v
+>>
+PS C:\Users\adamr\.cursor\oversight-frontend> git remote add origin https://github.com/saivenses59-hub  
+>> /oversight-frontend.git
+>>
+/oversight-frontend.git : Le terme «
+/oversight-frontend.git» n'est pas reconnu comme    
+nom d'applet de commande, fonction, fichier de      
+script ou programme exécutable. Vérifiez
+l'orthographe du nom, ou si un chemin d'accès       
+existe, vérifiez que le chemin d'accès est correct  
+et réessayez.
+Au caractère Ligne:2 : 1
++ /oversight-frontend.git
++ ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (/ov  
+   ersight-frontend.git:String) [], CommandNotFou   
+  ndException
+    + FullyQualifiedErrorId : CommandNotFoundExcep  
+   tion
+
+PS C:\Users\adamr\.cursor\oversight-frontend> npm install -g vercel
+>>
+npm warn deprecated tar@6.2.1: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+added 284 packages in 3m
+
+32 packages are looking for funding
+  run `npm fund` for details
+PS C:\Users\adamr\.cursor\oversight-frontend> vercel
+ login
+>>
+Vercel CLI 50.11.0
+> NOTE: The Vercel CLI now collects telemetry regarding usage of the CLI.
+> This information is used to shape the CLI roadmap and prioritize features.
+> You can learn more, including how to opt-out if you'd not like to participate in this program, by visiting the following URL:
+> https://vercel.com/docs/cli/about-telemetry       
+
+  Visit https://vercel.com/oauth/device?user_code=TKND-RTVJ
+
+  Congratulations! You are now signed in.
+
+  To deploy something, run `vercel`.
+
+  💡 To deploy every commit automatically,
+  connect a Git Repository (vercel.link/git (https://vercel.link/git)).
+PS C:\Users\adamr\.cursor\oversight-frontend> vercel
+ --prod
+>>
+Vercel CLI 50.11.0
+? Set up and deploy “~\.cursor\oversight-frontend”?
+yes
+? Which scope should contain your project? adam's 
+projects
+? Link to existing project? yes
+? Which existing project do you want to link?
+oversight-protocol
+🔗  Linked to adams-projects-fe046b27/oversight-protocol (created .vercel and added it to .gitignore)   
+? Would you like to pull environment variables now?
+yes
+> Downloading `development` Environment Variables for adams-projects-fe046b27/oversight-protocol        
+✅  Created .env.local file and added it to .gitignore [442ms]
+Error: The provided path “~\.cursor\oversight-frontend\oversight-frontend” does not exist. To change your Project Settings, go to https://vercel.com/adams-projects-fe046b27/oversight-protocol/settings        
+PS C:\Users\adamr\.cursor\oversight-frontend> cd C:\Users\adamr\.cursor\oversight-frontend
+>>
+PS C:\Users\adamr\.cursor\oversight-frontend> Remove-Item -Recurse -Force .vercel -ErrorAction SilentlyContinue
+>>
+PS C:\Users\adamr\.cursor\oversight-frontend> vercel
+ --prod
+>>
+Vercel CLI 50.11.0
+? Set up and deploy “~\.cursor\oversight-frontend”?
+yes
+? Which scope should contain your project? adam's 
+projects
+? Link to existing project? no
+? What’s your project’s name? oversight-frontend    
+? In which directory is your code located? ././     
+> Auto-detected Project Settings for Next.js
+
+? Want to modify these settings? no
+? Do you want to change additional project settings?
+ no
+🔗  Linked to adams-projects-fe046b27/oversight-frontend (created .vercel)
+? Detected a repository. Connect it to this project?
+ yes
+> Connecting Git repository: https://github.com/saivenses59-hub
+Error: Failed to parse Git repo data from the following remote URL: https://github.com/saivenses59-hub  
+🔍  Inspect: https://vercel.com/adams-projects-fe046b27/oversight-frontend/3GigXjqfSTHaFUoo3FXRMjm969bx [4s]
+⏳  Production: https://oversight-frontend-auc8ujgg0-adams-projects-fe046b27.vercel.app [4s]
+Error: The specified Root Directory ".\" does not exist. Please update your Project Settings.
+PS C:\Users\adamr\.cursor\oversight-frontend> npm install
+
+up to date, audited 473 packages in 3s
+
+146 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+PS C:\Users\adamr\.cursor\oversight-frontend> npm run dev
+
+> oversight-frontend@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.43.112:3000
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 1456ms
+ GET / 200 in 666ms (compile: 458ms, render: 208ms)
+ GET / 200 in 71ms (compile: 11ms, render: 60ms)
+ GET / 200 in 61ms (compile: 7ms, render: 54ms)
+ GET /dashboard 200 in 454ms (compile: 422ms, render: 32ms)
+PS C:\Users\adamr\.cursor\oversight-frontend> 
+                                              Remove-Item -Recurse -Force .vercel -ErrorAction SilentlyContinue
+>>
+PS C:\Users\adamr\.cursor\oversight-frontend> Get-ChildItem | Select-Object Name
+>>
+
+Name
+----
+.next
+app
+components
+lib
+node_modules
+public
+.env.local
+.gitignore
+components.json
+eslint.config.mjs
+next-env.d.ts
+next.config.ts
+package-lock.json
+package.json
+postcss.config.mjs
+tsconfig.json
+
+
+PS C:\Users\adamr\.cursor\oversight-frontend> vercel
+ --prod
+>>
+Vercel CLI 50.11.0
+? Set up and deploy “~\.cursor\oversight-frontend”?
+no
+Canceled. Project not set up.
+PS C:\Users\adamr\.cursor\oversight-frontend> vercel
+ --prod
+>>
+Vercel CLI 50.11.0
+? Set up and deploy “~\.cursor\oversight-frontend”?
+yes
+? Which scope should contain your project? adam's 
+projects
+? Found project 
+“adams-projects-fe046b27/oversight-frontend”. Link
+to it? no
+? Link to different existing project? yes
+? Which existing project do you want to link?
+oversight-protocol
+🔗  Linked to adams-projects-fe046b27/oversight-protocol (created .vercel)
+? Would you like to pull environment variables now?
+yes
+> Overwriting existing .env.local file
+> Downloading `development` Environment Variables for adams-projects-fe046b27/oversight-protocol        
+
+Changes:
++ VERCEL_OIDC_TOKEN (Updated)
+
+✅  Updated .env.local file  [315ms]
+Error: The provided path “~\.cursor\oversight-frontend\oversight-frontend” does not exist. To change your Project Settings, go to https://vercel.com/adams-projects-fe046b27/oversight-protocol/settings        
+PS C:\Users\adamr\.cursor\oversight-frontend> vercel
+ --prod
+Vercel CLI 50.11.0
+Error: The provided path “~\.cursor\oversight-frontend\oversight-frontend” does not exist. To change your Project Settings, go to https://vercel.com/adams-projects-fe046b27/oversight-protocol/settings        
+PS C:\Users\adamr\.cursor\oversight-frontend> vercel
+ --prod
+Vercel CLI 50.11.0
+Error: The provided path “~\.cursor\oversight-frontend\oversight-frontend” does not exist. To change your Project Settings, go to https://vercel.com/adams-projects-fe046b27/oversight-protocol/settings        
+PS C:\Users\adamr\.cursor\oversight-frontend> npm run dev 
+
+> oversight-frontend@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.43.112:3000
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 1612ms
+ GET / 200 in 1137ms (compile: 923ms, render: 215ms)
+PS C:\Users\adamr\.cursor\oversight-frontend> 
+                                              git status
+>>
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   .gitignore
+
+no changes added to commit (use "git add" and/or "git commit -a")
+PS C:\Users\adamr\.cursor\oversight-frontend> git add .
+>>
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it  
+PS C:\Users\adamr\.cursor\oversight-frontend> git commit -m "Restructured architecture: Landing page + Dashboard"
+>>
+[main ef8c607] Restructured architecture: Landing page + Dashboard
+ 1 file changed, 3 insertions(+)
+PS C:\Users\adamr\.cursor\oversight-frontend> git push origin main
+>>
+remote: Not Found
+fatal: repository 'https://github.com/saivenses59-hub/' not found
+PS C:\Users\adamr\.cursor\oversight-frontend> git add --all
+>>
+PS C:\Users\adamr\.cursor\oversight-frontend> git status
+>>
+On branch main
+nothing to commit, working tree clean
+PS C:\Users\adamr\.cursor\oversight-frontend> git push origin main
+>>
+remote: Not Found
+fatal: repository 'https://github.com/saivenses59-hub/' not found
+PS C:\Users\adamr\.cursor\oversight-frontend> git remote set-url origin https://github.com/saivenses59-hub/oversight-protocol.git
+>>
+PS C:\Users\adamr\.cursor\oversight-frontend> git push origin main
+>>
+remote: Repository not found.
+fatal: repository 'https://github.com/saivenses59-hub/oversight-protocol.git/' not found
+PS C:\Users\adamr\.cursor\oversight-frontend> git remote remove origin
+>>
+PS C:\Users\adamr\.cursor\oversight-frontend> git remote add origin https://github.com/saivenses59-hub/oversight-protocol.git
+>>
+PS C:\Users\adamr\.cursor\oversight-frontend> git push -u origin main
+>>
+remote: Repository not found.
+fatal: repository 'https://github.com/saivenses59-hub/oversight-protocol.git/' not found
+PS C:\Users\adamr\.cursor\oversight-frontend> git remote -v
+>>
+origin  https://github.com/saivenses59-hub/oversight-protocol.git (fetch)
+origin  https://github.com/saivenses59-hub/oversight-protocol.git (push)
+PS C:\Users\adamr\.cursor\oversight-frontend> git push https://github.com/saivenses59-hub/oversight-protocol.git main
+remote: Repository not found.
+fatal: repository 'https://github.com/saivenses59-hub/oversight-protocol.git/' not found
+PS C:\Users\adamr\.cursor\oversight-frontend> cd ..
+>>
+PS C:\Users\adamr\.cursor> git remote -v
+>>
+origin  https://github.com/saivenses59-hub/oversight-protocol..git (fetch)
+origin  https://github.com/saivenses59-hub/oversight-protocol..git (push)
+PS C:\Users\adamr\.cursor> git remote set-url origin https://github.com/saivenses59-hub/oversight-protocol.git
+>>
+PS C:\Users\adamr\.cursor> git add .
 >> git add .
->> git commit -m "Initial Deployment"
-Reinitialized existing Git repository in C:/Users/adamr/.cursor/.git/
-warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/4.txt', LF will be replaced by CRLF the next time Git touches it
-[master 4a1369a] Initial Deployment
- 2 files changed, 90 insertions(+)
-PS C:\Users\adamr\.cursor> git add .
->> git commit -m "Add requirements for server"      
-warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/4.txt', LF will be replaced by CRLF the next time Git touches it
-[master 4485562] Add requirements for server
- 4 files changed, 15 insertions(+), 2 deletions(-)  
- create mode 100644 oversight-backend/requirements.txt
-PS C:\Users\adamr\.cursor> git remote add origin https://github.com/saivenses59-hub/oversight-protocol..git
 >>
-PS C:\Users\adamr\.cursor> git branch -M main
->>
-PS C:\Users\adamr\.cursor> git push -u origin main
-info: please complete authentication in your browser...
-Enumerating objects: 85, done.
-Counting objects: 100% (85/85), done.
-Delta compression using up to 8 threads
-Compressing objects: 100% (71/71), done.
-Writing objects: 100% (85/85), 108.93 KiB | 3.63 MiB/s, done.
-Total 85 (delta 12), reused 0 (delta 0), pack-reused 0 (from 0)
-remote: Resolving deltas: 100% (12/12), done.       
-To https://github.com/saivenses59-hub/oversight-protocol..git
- * [new branch]      main -> main
-branch 'main' set up to track 'origin/main'.
-PS C:\Users\adamr\.cursor> 
- *  History restored 
-
-PS C:\Users\adamr\.cursor> git add .
->> git commit -m "Point frontend to live server"
->> git push
-warning: in the working copy of 'oversight-frontend/app/page.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-frontend/.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-frontend/package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-sdk/final_test.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'oversight-sdk/oversight_sdk.egg-info/requires.txt', LF will be replaced by CRLF the next time Git touches it
 warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/1.txt', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/2.txt', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/3.txt', LF will be replaced by CRLF the next time Git touches it
-warning: in the working copy of 'projects/c-Users-adamr-cursor/terminals/4.txt', LF will be replaced by CRLF the next time Git touches it
-[main 4df82c1] Point frontend to live server
- 7 files changed, 52 insertions(+), 131 deletions(-)
-Enumerating objects: 29, done.
-Counting objects: 100% (29/29), done.
-Delta compression using up to 8 threads
-Compressing objects: 100% (14/14), done.
-Writing objects: 100% (15/15), 2.34 KiB | 800.00 KiB/s, done.
-Total 15 (delta 11), reused 0 (delta 0), pack-reused 0 (from 0)
-remote: Resolving deltas: 100% (11/11), completed with 11 local objects.
-To https://github.com/saivenses59-hub/oversight-protocol..git
-   4485562..4df82c1  main -> main
-PS C:\Users\adamr\.cursor> ^C
-PS C:\Users\adamr\.cursor> 
- *  History restored 
-
-PS C:\Users\adamr\.cursor> 
- *  History restored 
-
-PS C:\Users\adamr\.cursor>

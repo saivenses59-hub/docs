@@ -1,143 +1,77 @@
 ---
-pid: 9680
+pid: 8272
 cwd: |
-  C:\Users\adamr\.cursor
+  C:\Users\adamr\.cursor\oversight-backend
+active_command: |
+  python -m uvicorn main:app --reload
+last_command: cd oversight-backend
+last_exit_code: 0
 ---
-  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
-  File "<frozen importlib._bootstrap_external>", line 755, in exec_module
-  File "<frozen importlib._bootstrap_external>", line 893, in get_code
-  File "<frozen importlib._bootstrap_external>", line 823, in source_to_code
-  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
-  File "C:\Users\adamr\.cursor\oversight-backend\main.py", line 225
-    from fastapi.responses import StreamingResponse 
-    ^^^^
-SyntaxError: invalid syntax
-WARNING:  StatReload detected changes in 'main.py'. Reloading...
- Process SpawnProcess-3:
-Traceback (most recent call last):
-  File "C:\Python314\Lib\multiprocessing\process.py", line 320, in _bootstrap
-    self.run()
-    ~~~~~~~~^^
-  File "C:\Python314\Lib\multiprocessing\process.py", line 108, in run
-    self._target(*self._args, **self._kwargs)       
-    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^       
-  File "C:\Users\adamr\AppData\Roaming\Python\Python314\site-packages\uvicorn\_subprocess.py", line 80, in subprocess_started
-    target(sockets=sockets)
-    ~~~~~~^^^^^^^^^^^^^^^^^
-  File "C:\Users\adamr\AppData\Roaming\Python\Python314\site-packages\uvicorn\server.py", line 67, in run
-    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())        
-  File "C:\Python314\Lib\asyncio\runners.py", line 204, in run
-    return runner.run(main)
-           ~~~~~~~~~~^^^^^^
-  File "C:\Python314\Lib\asyncio\runners.py", line 127, in run
-    return self._loop.run_until_complete(task)      
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^      
-  File "C:\Python314\Lib\asyncio\base_events.py", line 719, in run_until_complete
-    return future.result()
-           ~~~~~~~~~~~~~^^
-  File "C:\Users\adamr\AppData\Roaming\Python\Python314\site-packages\uvicorn\server.py", line 71, in serve
-    await self._serve(sockets)
-  File "C:\Users\adamr\AppData\Roaming\Python\Python314\site-packages\uvicorn\server.py", line 78, in _serve
-    config.load()
-    ~~~~~~~~~~~^^
-  File "C:\Users\adamr\AppData\Roaming\Python\Python314\site-packages\uvicorn\config.py", line 439, in load
-    self.loaded_app = import_from_string(self.app)  
-                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^  
-  File "C:\Users\adamr\AppData\Roaming\Python\Python314\site-packages\uvicorn\importer.py", line 19, in import_from_string
-    module = importlib.import_module(module_str)    
-  File "C:\Python314\Lib\importlib\__init__.py", line 88, in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
-  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
-  File "<frozen importlib._bootstrap_external>", line 755, in exec_module
-  File "<frozen importlib._bootstrap_external>", line 893, in get_code
-  File "<frozen importlib._bootstrap_external>", line 823, in source_to_code
-  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
-  File "C:\Users\adamr\.cursor\oversight-backend\main.py", line 225
-    from fastapi.responses import StreamingResponse 
-    ^^^^
-SyntaxError: invalid syntax
-
+PS C:\Users\adamr\.cursor>
  *  History restored 
 
-PS C:\Users\adamr\.cursor> ^C
-PS C:\Users\adamr\.cursor>  git add ., git commit -m "Add Audit", git push
-error: unknown switch `m'
-usage: git add [<options>] [--] <pathspec>...
-
-    -n, --[no-]dry-run    dry run
-    -v, --[no-]verbose    be verbose
-
-    -i, --[no-]interactive
-                          interactive picking       
-    -p, --[no-]patch      select hunks interactively
-    -U, --unified <n>     generate diffs with <n> lines context
-    --inter-hunk-context <n>
-                          show context between diff hunks up to the specified number of lines
-    -e, --[no-]edit       edit current diff and apply
-    -f, --[no-]force      allow adding otherwise ignored files
-    -u, --[no-]update     update tracked files      
-    --[no-]renormalize    renormalize EOL of tracked files (implies -u)
-    -N, --[no-]intent-to-add
-                          record only the fact that the path will be added later
-    -A, --[no-]all        add changes from all tracked and untracked files
-    --[no-]ignore-removal ignore paths removed in the working tree (same as --no-all)
-    --[no-]refresh        don't add, only refresh the index
-    --[no-]ignore-errors  just skip files which cannot be added because of errors
-    --[no-]ignore-missing check if - even missing - files are ignored in dry run
-    --[no-]sparse         allow updating entries outside of the sparse-checkout cone
-    --[no-]chmod (+|-)x   override the executable bit of the listed files
-    --[no-]pathspec-from-file <file>
-                          read pathspec from file   
-    --[no-]pathspec-file-nul
-                          with --pathspec-from-file, pathspec elements are separated with NUL character 
-
-PS C:\Users\adamr\.cursor> npm run dev 
-npm : Impossible de charger le fichier C:\Program 
-Files\nodejs\npm.ps1, car l’exécution de scripts    
-est désactivée sur ce système. Pour plus
-d’informations, consultez about_Execution_Policies  
-à l’adresse
-https://go.microsoft.com/fwlink/?LinkID=135170.     
+PS C:\Users\adamr\.cursor> cd C:\Users\adamr\.cursor\oversight-backend-simple
+>> 
+cd : Impossible de trouver le chemin d'accès «
+C:\Users\adamr\.cursor\oversight-backend-simple», 
+car il n'existe pas.
 Au caractère Ligne:1 : 1
-+ npm run dev
-+ ~~~
-    + CategoryInfo          : Erreur de sécurité:   
-   (:) [], PSSecurityException
-    + FullyQualifiedErrorId : UnauthorizedAccess    
-PS C:\Users\adamr\.cursor> cs oversight-frontend  
-cs : Le terme «cs» n'est pas reconnu comme nom 
-d'applet de commande, fonction, fichier de script   
-ou programme exécutable. Vérifiez l'orthographe du  
-nom, ou si un chemin d'accès existe, vérifiez que   
-le chemin d'accès est correct et réessayez.
-Au caractère Ligne:1 : 1
-+ cs oversight-frontend
-+ ~~
-    + CategoryInfo          : ObjectNotFound: (cs:  
-   String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundExcep  
-   tion
++ cd
+C:\Users\adamr\.cursor\oversight-backend-simple     
++
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+    + CategoryInfo          : ObjectNotFound: (C:\  
+   Users\adamr\...-backend-simple:String) [Set-Lo   
+  cation], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microso  
+   ft.PowerShell.Commands.SetLocationCommand        
 
-PS C:\Users\adamr\.cursor> cs oversight-backend
-cs : Le terme «cs» n'est pas reconnu comme nom 
-d'applet de commande, fonction, fichier de script   
-ou programme exécutable. Vérifiez l'orthographe du  
-nom, ou si un chemin d'accès existe, vérifiez que   
-le chemin d'accès est correct et réessayez.
-Au caractère Ligne:1 : 1
-+ cs oversight-backend
-+ ~~
-    + CategoryInfo          : ObjectNotFound: (cs:  
-   String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundExcep  
-   tion
-
-PS C:\Users\adamr\.cursor> git add .
->> git commit -m "Add Audit Export Endpoint"        
->> git push
+PS C:\Users\adamr\.cursor> python -m uvicorn main:app --reload
+INFO:     Will watch for changes in these directories: ['C:\\Users\\adamr\\.cursor']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [1132] using StatReload
+ERROR:    Error loading ASGI app. Could not import module "main".
+INFO:     Stopping reloader process [1132]
+PS C:\Users\adamr\.cursor> python main.py
+>>
+C:\Python314\python.exe: can't open file 'C:\\Users\\adamr\\.cursor\\main.py': [Errno 2] No such file or directory
+PS C:\Users\adamr\.cursor> cd oversight-backend
+PS C:\Users\adamr\.cursor\oversight-backend> python -m uvicorn main:app --reload
+INFO:     Will watch for changes in these directories: ['C:\\Users\\adamr\\.cursor\\oversight-backend'] 
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [16068] using StatReload
+INFO:     Started server process [19528]
+INFO:     Waiting for application startup.
+2026-02-05 13:41:28,013 | INFO     | oversight | ============================================================
+2026-02-05 13:41:28,013 | INFO     | oversight | 🚀 OVERSIGHT Backend v2.0 Started
+2026-02-05 13:41:28,013 | INFO     | oversight | 📊 Tax Rate: 10.00%
+2026-02-05 13:41:28,013 | INFO     | oversight | 💰 Daily Limit: $50.00
+2026-02-05 13:41:28,014 | INFO     | oversight | 🔒 Idempotency: ENABLED
+2026-02-05 13:41:28,014 | INFO     | oversight | ============================================================
+INFO:     Application startup complete.
+2026-02-05 13:50:56,694 | INFO     | oversight | Initialized wallet 0x742d35cc... with balance $500.00  
+2026-02-05 13:50:56,699 | INFO     | oversight | 💳 Payment request: $40.0 to OpenAI | Balance: $500.00 | Daily spent: $0
+2026-02-05 13:50:56,699 | INFO     | oversight | 💰 Tax split: Gross=$40.0, Tax=$4.00 (10%), Vendor=$36.00 (90%)
+2026-02-05 13:50:56,709 | INFO     | oversight | ✅ Payment APPROVED: TX=tx_5067fd9a66aa4d43, New balance=$460.00
+INFO:     127.0.0.1:63618 - "POST /process-payment HTTP/1.1" 200 OK
+2026-02-05 13:50:56,726 | INFO     | oversight | 💳 Payment request: $30.0 to Stripe | Balance: $460.00 | Daily spent: $40.0
+2026-02-05 13:50:56,727 | WARNING  | oversight | ❌ Payment DENIED: Daily limit exceeded
+INFO:     127.0.0.1:63618 - "POST /process-payment HTTP/1.1" 200 OK
+2026-02-05 13:50:56,733 | INFO     | oversight | 💾 Idempotent request detected: test_9c27b2ea-51... (returning cached)
+INFO:     127.0.0.1:63618 - "POST /process-payment HTTP/1.1" 200 OK
+2026-02-05 13:50:56,744 | INFO     | oversight | 💵 Deposit: $100.0 → 0x742d35cc... | New balance: $560.00
+INFO:     127.0.0.1:63618 - "POST /deposit HTTP/1.1"
+ 200 OK
+INFO:     127.0.0.1:63618 - "GET /agents HTTP/1.1" 200 OK
+2026-02-05 14:17:11,517 | INFO     | oversight | 💳 Payment request: $40.0 to OpenAI | Balance: $560.00 | Daily spent: $40.0
+2026-02-05 14:17:11,526 | WARNING  | oversight | ❌ Payment DENIED: Daily limit exceeded
+INFO:     127.0.0.1:64692 - "POST /process-payment HTTP/1.1" 200 OK
+2026-02-05 14:17:11,533 | INFO     | oversight | 💳 Payment request: $30.0 to Stripe | Balance: $560.00 | Daily spent: $40.0
+2026-02-05 14:17:11,534 | WARNING  | oversight | ❌ Payment DENIED: Daily limit exceeded
+INFO:     127.0.0.1:64692 - "POST /process-payment HTTP/1.1" 200 OK
+2026-02-05 14:17:11,537 | INFO     | oversight | 💾 Idempotent request detected: test_15684651-a6... (returning cached)
+INFO:     127.0.0.1:64692 - "POST /process-payment HTTP/1.1" 200 OK
+2026-02-05 14:17:11,541 | INFO     | oversight | 💵 Deposit: $100.0 → 0x742d35cc... | New balance: $660.00
+INFO:     127.0.0.1:64692 - "POST /deposit HTTP/1.1"
+ 200 OK
+INFO:     127.0.0.1:64692 - "GET /agents HTTP/1.1" 200 OK
