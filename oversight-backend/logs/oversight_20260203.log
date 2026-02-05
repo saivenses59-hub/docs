@@ -1,0 +1,100 @@
+2026-02-03 16:25:42 UTC | INFO     | oversight | <module>:122 | ================================================================================
+2026-02-03 16:25:42 UTC | INFO     | oversight | <module>:123 | OVERSIGHT Backend Starting
+2026-02-03 16:25:42 UTC | INFO     | oversight | <module>:124 | Environment: development
+2026-02-03 16:25:42 UTC | INFO     | oversight | <module>:125 | Tax Rate: 10.00%
+2026-02-03 16:25:42 UTC | INFO     | oversight | <module>:126 | Tax Vault: 0x_IRS_TAX_VAULT_000000000000000000
+2026-02-03 16:25:42 UTC | INFO     | oversight | <module>:127 | Default Spend Limit: $50.00
+2026-02-03 16:25:42 UTC | INFO     | oversight | <module>:128 | ================================================================================
+2026-02-03 16:25:43 UTC | INFO     | oversight | startup:634 | ================================================================================
+2026-02-03 16:25:43 UTC | INFO     | oversight | startup:638 | ================================================================================
+2026-02-03 16:47:30 UTC | INFO     | oversight | shutdown:642 | OVERSIGHT Backend Shutting Down
+2026-02-03 19:50:58 UTC | INFO     | oversight | <module>:122 | ================================================================================
+2026-02-03 19:50:58 UTC | INFO     | oversight | <module>:123 | OVERSIGHT Backend Starting
+2026-02-03 19:50:58 UTC | INFO     | oversight | <module>:124 | Environment: development
+2026-02-03 19:50:58 UTC | INFO     | oversight | <module>:125 | Tax Rate: 10.00%
+2026-02-03 19:50:58 UTC | INFO     | oversight | <module>:126 | Tax Vault: 0x_IRS_TAX_VAULT_000000000000000000
+2026-02-03 19:50:58 UTC | INFO     | oversight | <module>:127 | Default Spend Limit: $50.00
+2026-02-03 19:50:58 UTC | INFO     | oversight | <module>:128 | ================================================================================
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:122 | ================================================================================
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:123 | OVERSIGHT Backend Starting
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:124 | Environment: development
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:125 | Tax Rate: 10.00%
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:126 | Tax Vault: 0x_IRS_TAX_VAULT_000000000000000000
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:127 | Default Spend Limit: $50.00
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:128 | ================================================================================
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:122 | ================================================================================
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:123 | OVERSIGHT Backend Starting
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:124 | Environment: development
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:125 | Tax Rate: 10.00%
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:126 | Tax Vault: 0x_IRS_TAX_VAULT_000000000000000000
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:127 | Default Spend Limit: $50.00
+2026-02-03 19:51:00 UTC | INFO     | oversight | <module>:128 | ================================================================================
+2026-02-03 19:51:01 UTC | INFO     | oversight | startup:634 | ================================================================================
+2026-02-03 19:51:01 UTC | INFO     | oversight | startup:638 | ================================================================================
+2026-02-03 19:51:34 UTC | INFO     | oversight | add_request_id:326 | POST /process-payment
+2026-02-03 19:53:31 UTC | INFO     | oversight | shutdown:642 | OVERSIGHT Backend Shutting Down
+2026-02-03 19:54:34 UTC | INFO     | oversight | <module>:122 | ================================================================================
+2026-02-03 19:54:34 UTC | INFO     | oversight | <module>:123 | OVERSIGHT Backend Starting
+2026-02-03 19:54:34 UTC | INFO     | oversight | <module>:124 | Environment: development
+2026-02-03 19:54:34 UTC | INFO     | oversight | <module>:125 | Tax Rate: 10.00%
+2026-02-03 19:54:34 UTC | INFO     | oversight | <module>:126 | Tax Vault: 0x_IRS_TAX_VAULT_000000000000000000
+2026-02-03 19:54:34 UTC | INFO     | oversight | <module>:127 | Default Spend Limit: $50.00
+2026-02-03 19:54:34 UTC | INFO     | oversight | <module>:128 | ================================================================================
+2026-02-03 19:54:35 UTC | INFO     | oversight | startup:634 | ================================================================================
+2026-02-03 19:54:35 UTC | INFO     | oversight | startup:638 | ================================================================================
+2026-02-03 19:55:12 UTC | INFO     | oversight | shutdown:642 | OVERSIGHT Backend Shutting Down
+2026-02-03 19:58:00 UTC | INFO     | oversight | <module>:122 | ================================================================================
+2026-02-03 19:58:00 UTC | INFO     | oversight | <module>:123 | OVERSIGHT Backend Starting
+2026-02-03 19:58:00 UTC | INFO     | oversight | <module>:124 | Environment: development
+2026-02-03 19:58:00 UTC | INFO     | oversight | <module>:125 | Tax Rate: 10.00%
+2026-02-03 19:58:00 UTC | INFO     | oversight | <module>:126 | Tax Vault: 0x_IRS_TAX_VAULT_000000000000000000
+2026-02-03 19:58:00 UTC | INFO     | oversight | <module>:127 | Default Spend Limit: $50.00
+2026-02-03 19:58:00 UTC | INFO     | oversight | <module>:128 | ================================================================================
+2026-02-03 19:58:02 UTC | INFO     | oversight | <module>:122 | ================================================================================
+2026-02-03 19:58:02 UTC | INFO     | oversight | <module>:123 | OVERSIGHT Backend Starting
+2026-02-03 19:58:02 UTC | INFO     | oversight | <module>:124 | Environment: development
+2026-02-03 19:58:02 UTC | INFO     | oversight | <module>:125 | Tax Rate: 10.00%
+2026-02-03 19:58:02 UTC | INFO     | oversight | <module>:126 | Tax Vault: 0x_IRS_TAX_VAULT_000000000000000000
+2026-02-03 19:58:02 UTC | INFO     | oversight | <module>:127 | Default Spend Limit: $50.00
+2026-02-03 19:58:02 UTC | INFO     | oversight | <module>:128 | ================================================================================
+2026-02-03 19:58:03 UTC | INFO     | oversight | <module>:122 | ================================================================================
+2026-02-03 19:58:03 UTC | INFO     | oversight | <module>:123 | OVERSIGHT Backend Starting
+2026-02-03 19:58:03 UTC | INFO     | oversight | <module>:124 | Environment: development
+2026-02-03 19:58:03 UTC | INFO     | oversight | <module>:125 | Tax Rate: 10.00%
+2026-02-03 19:58:03 UTC | INFO     | oversight | <module>:126 | Tax Vault: 0x_IRS_TAX_VAULT_000000000000000000
+2026-02-03 19:58:03 UTC | INFO     | oversight | <module>:127 | Default Spend Limit: $50.00
+2026-02-03 19:58:03 UTC | INFO     | oversight | <module>:128 | ================================================================================
+2026-02-03 19:58:03 UTC | INFO     | oversight | startup:634 | ================================================================================
+2026-02-03 19:58:03 UTC | INFO     | oversight | startup:638 | ================================================================================
+2026-02-03 19:58:16 UTC | INFO     | oversight | shutdown:642 | OVERSIGHT Backend Shutting Down
+2026-02-03 20:00:21 UTC | INFO     | oversight | <module>:122 | ================================================================================
+2026-02-03 20:00:21 UTC | INFO     | oversight | <module>:123 | OVERSIGHT Backend Starting
+2026-02-03 20:00:21 UTC | INFO     | oversight | <module>:124 | Environment: development
+2026-02-03 20:00:21 UTC | INFO     | oversight | <module>:125 | Tax Rate: 10.00%
+2026-02-03 20:00:21 UTC | INFO     | oversight | <module>:126 | Tax Vault: 0x_IRS_TAX_VAULT_000000000000000000
+2026-02-03 20:00:21 UTC | INFO     | oversight | <module>:127 | Default Spend Limit: $50.00
+2026-02-03 20:00:21 UTC | INFO     | oversight | <module>:128 | ================================================================================
+2026-02-03 20:00:22 UTC | INFO     | oversight | startup:634 | ================================================================================
+2026-02-03 20:00:22 UTC | INFO     | oversight | startup:638 | ================================================================================
+2026-02-03 20:01:14 UTC | INFO     | oversight | add_request_id:326 | POST /process-payment
+2026-02-03 20:02:03 UTC | INFO     | oversight | <module>:122 | ================================================================================
+2026-02-03 20:02:03 UTC | INFO     | oversight | <module>:123 | OVERSIGHT Backend Starting
+2026-02-03 20:02:03 UTC | INFO     | oversight | <module>:124 | Environment: development
+2026-02-03 20:02:03 UTC | INFO     | oversight | <module>:125 | Tax Rate: 10.00%
+2026-02-03 20:02:03 UTC | INFO     | oversight | <module>:126 | Tax Vault: 0x_IRS_TAX_VAULT_000000000000000000
+2026-02-03 20:02:03 UTC | INFO     | oversight | <module>:127 | Default Spend Limit: $50.00
+2026-02-03 20:02:03 UTC | INFO     | oversight | <module>:128 | ================================================================================
+2026-02-03 20:02:04 UTC | INFO     | oversight | startup:634 | ================================================================================
+2026-02-03 20:02:04 UTC | INFO     | oversight | startup:638 | ================================================================================
+2026-02-03 20:02:50 UTC | INFO     | oversight | add_request_id:326 | POST /process-payment
+2026-02-03 20:09:10 UTC | INFO     | oversight | <module>:122 | ================================================================================
+2026-02-03 20:09:10 UTC | INFO     | oversight | <module>:123 | OVERSIGHT Backend Starting
+2026-02-03 20:09:10 UTC | INFO     | oversight | <module>:124 | Environment: development
+2026-02-03 20:09:10 UTC | INFO     | oversight | <module>:125 | Tax Rate: 10.00%
+2026-02-03 20:09:10 UTC | INFO     | oversight | <module>:126 | Tax Vault: 0x_IRS_TAX_VAULT_000000000000000000
+2026-02-03 20:09:10 UTC | INFO     | oversight | <module>:127 | Default Spend Limit: $50.00
+2026-02-03 20:09:10 UTC | INFO     | oversight | <module>:128 | ================================================================================
+2026-02-03 20:09:12 UTC | INFO     | oversight | startup:634 | ================================================================================
+2026-02-03 20:09:12 UTC | INFO     | oversight | startup:638 | ================================================================================
+2026-02-03 20:09:49 UTC | INFO     | oversight | add_request_id:326 | POST /process-payment
+2026-02-03 20:11:12 UTC | INFO     | oversight | shutdown:642 | OVERSIGHT Backend Shutting Down
