@@ -1,0 +1,10 @@
+README.md
+setup.py
+oversight/__init__.py
+oversight/client.py
+oversight/types.py
+oversight_sdk.egg-info/PKG-INFO
+oversight_sdk.egg-info/SOURCES.txt
+oversight_sdk.egg-info/dependency_links.txt
+oversight_sdk.egg-info/requires.txt
+oversight_sdk.egg-info/top_level.txt

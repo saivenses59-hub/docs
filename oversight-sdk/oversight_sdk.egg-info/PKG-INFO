@@ -1,0 +1,26 @@
+Metadata-Version: 2.4
+Name: oversight-sdk
+Version: 1.0.1
+Summary: The Institutional Banking & Compliance Protocol for AI Agents.
+Home-page: https://oversight-protocol.vercel.app
+Author: Oversight Protocol
+Author-email: founder@oversight-protocol.ai
+Project-URL: Documentation, https://docs.oversight-protocol.ai
+Project-URL: Source, https://github.com/your-username/oversight-protocol
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Office/Business :: Financial
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: requests>=2.28.0
+Requires-Dist: pydantic>=2.0.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: project-url
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
